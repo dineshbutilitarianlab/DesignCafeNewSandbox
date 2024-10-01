@@ -1,0 +1,307 @@
+<apex:page renderAs="pdf" standardController="Invoice__c" extensions="InvoicePdfController" standardStylesheets="false" showHeader="false" sidebar="false" applyHtmlTag="true" applyBodyTag="false">
+    <head>
+        <style type = "text/css">
+            @page { 
+                size: A4;
+                font-family:monospace;
+            }   
+        </style>
+    </head>
+    <body>
+        <div style="font-size: xx-large;">
+            <h1 class="mainTitle"><center>Tax Invoice</center></h1>
+        </div>
+            <div class="bPageBlock" style="border: 0.3px solid black !important;" width="100%">
+                <div class="pbHeader">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                     <apex:repeat value="{!wrapInvoicetList}" var="invar">
+                        <tr>
+                            <td rowspan="3" style=" border: 1px solid #949191;width:50%;padding:8px 8px;">
+                                <b>{!invar.invPdfCustomSettingObj.Company_Name__c}</b>
+                                    <br/>{!invar.invPdfCustomSettingObj.BillingStreet__c},
+                                    <br/> {!invar.invPdfCustomSettingObj.BillingCity__c},
+                                    <br/>GST - {!invar.invPdfCustomSettingObj.GST__c}
+                                    <br/>GSTIN/UIN: {!invar.invPdfCustomSettingObj.GSTIN_UIN__c}
+                                    <br/>State Name : {!invar.invPdfCustomSettingObj.BillingState__c},Code : {!invar.invPdfCustomSettingObj.Code__c}
+                                    <br/>CIN: {!invar.invPdfCustomSettingObj.CIN__c}
+                                    <br/>E-Mail : {!invar.invPdfCustomSettingObj.E_Mail__c}
+                             </td>
+                            <td style=" border: 1px solid #949191;width:20%;padding:8px;">
+                                Invoice No.<br/> 
+                                <b>{!invar.inv.Name}</b>
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:8px">
+                                Date<br/>
+                                <b><apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                    <apex:param value="{!invar.inv.Invoice_Date__c}" /> 
+                                </apex:outputText>
+                                    </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" border:1px solid #949191;width:20%;padding:8px">
+                                Delivery Note<br/>
+                                <b></b>
+                            </td> 
+                            <td style=" border:1px solid #949191;padding:8px">
+                                Mode/Terms of Payment<br/>
+                                <b></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" border: 1px solid #949191;width:20%;padding:8px">
+                                Supplier’s Ref.<br/>
+                                <b></b>
+                            </td>
+                            <td style=" border:1px solid #949191;width:20%;padding:8px">
+                                Other Reference(s)<br/>
+                                <b></b>
+                            </td>
+                        </tr>
+                        <tr>
+                           <td rowspan="5" style=" border: 1px solid #949191;width:50%;padding:2px 8px 200px 8px">
+                               Buyer<br/>
+                               <b>{!invar.inv.Customer__r.name}</b><br/>
+                                   {!invar.inv.Customer__r.BillingStreet}<br/>
+                                   {!invar.inv.Customer__r.BillingCity}<br/>
+                      			   {!invar.inv.Customer__r.BillingState}, {!invar.inv.Customer__r.BillingPostalCode}
+                            </td>
+
+                            <td style=" border: 1px solid #949191;width:20%;padding:8px">
+                                Despatched through<br/>
+                                <b></b>
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:8px">
+                                Destination<br/>
+                                <b></b>
+                            </td>
+                        </tr>
+                             <tr>
+                            <td style=" border: 1px solid #949191;width:20%;padding:8px">
+                                Buyer’s Order No.<br/>
+                                <b></b>
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:8px">
+                                Dated<br/>
+                                <b></b>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td style=" border:1px solid #949191;width:20%;padding:8px">
+                                Despatch Document No.<br/>
+                                <b></b>
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:8px">
+                                Delivery Note Date<br/>
+                                <b></b>
+                            </td>
+                             
+                        </tr>
+                          <tr>
+                           
+                            <td>
+                             
+                            </td>
+                             
+                        </tr>
+                     <tr><td colspan="2" rowspan="2" style=" border: 1px solid #949191;padding-left:3px"></td></tr>
+                       </apex:repeat>
+                    </table>
+                    <div style="margin-top:5px;"></div>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                         <apex:repeat value="{!wrapInvoicetList}" var="invar">
+						<tr>
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                Sr./No.
+                            </td>
+                            
+                            <td style="border:1px solid #949191;padding:5px">
+                                Description of Service
+                            </td>
+                            
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                HSN/SAC
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                Quantity
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                Rate
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                per
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                Amount
+                            </td>
+                        </tr>
+                        <tr style=" border: 1px solid #949191;">
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                1
+                            </td>
+                            <td style="padding:5px;text-align:right">
+                                Supply of Work Contracts @ {!invar.milestonePercentage}%
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                               9954
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">   
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                             {!invar.inv.Amount__c}
+                            </td>
+                        </tr>
+                        <tr style=" border: 1px solid #949191;">
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                2
+                            </td>
+                            <td style="text-align:right">
+                               Output CGST @ 9%
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                             
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">   
+                                
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                {!invar.inv.CGST__c}
+                            </td>
+                        </tr>
+                        <tr style=" border: 1px solid #949191;">
+                            <td style=" border: 1px solid #949191;padding:5px">
+                                3
+                            </td>
+                            <td style=" padding:5px;text-align:right">
+                                Output SGST @ 9%
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                               
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">   
+                                
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;">
+                                  {!invar.inv.SGST__c}
+                            </td>
+                        </tr>
+                        
+                        <tr style=" border: 1px solid #949191;">
+                            <td style=" border: 1px solid #949191;">
+                                <p></p>
+                            </td>
+                            <td style=" border: 1px solid #949191;padding:5px;text-align:right">
+                               Total
+                            </td>
+                            <td style=" border: 1px solid #949191;">
+                                <p></p>
+                            </td>
+                            <td style=" border: 1px solid #949191;">
+                                <p></p>
+                            </td>
+                            <td style=" border: 1px solid #949191;">
+                                <p></p>
+                            </td>
+                            <td style=" border: 1px solid #949191;">   
+                                <p></p>
+                            </td>
+                            <td style=" border: 1px solid #949191;">
+                                 {!invar.inv.Total_Amount__c}
+                            </td>
+                        </tr>
+                              </apex:repeat>
+                          </table> 
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%"> 
+                        <apex:repeat value="{!wrapInvoicetList}" var="invar">
+                            <tr><td >Amount Chargeable (in words)</td><td style="padding:5px;text-align:right" >E. And O.E</td></tr>
+                            <tr><td><h3>{!invar.inv.Amount_s__c}</h3></td><td ></td></tr>
+                        </apex:repeat>
+                    </table>
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                       <apex:repeat value="{!wrapInvoicetList}" var="invar">
+                         <tr align="center" >
+                            <th style="border: 1px solid #949191;padding:5px" rowspan="2"> HSN/SAC</th>
+                            <th style="border: 1px solid #949191;padding:5px" rowspan="2"> Taxable Value</th>
+                            <th style="border: 1px solid #949191;padding:5px" colspan="2">Central Tax</th>
+                            <th style="border: 1px solid #949191;padding:5px" colspan="2">State Tax</th>
+                            <th style="border: 1px solid #949191;padding:5px" rowspan="2" >Total Tax Amount</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #949191;padding:5px">Rate</th>
+                            <th style="border: 1px solid #949191;padding:5px">Amount</th>
+                            <th style="border: 1px solid #949191;padding:5px">Rate</th>
+                            <th style="border: 1px solid #949191;padding:5px">Amount</th>
+                        </tr>
+                        <tr >
+                            <td style=" border: 1px solid #949191;padding:5px">9945</td>
+                            <td style=" border: 1px solid #949191;padding:5px">{!invar.inv.Amount__c}</td>
+                            <td style=" border: 1px solid #949191;padding:5px">9%</td>
+                            <td style=" border: 1px solid #949191;padding:5px">{!invar.inv.CGST__c}</td>
+                             <td style=" border: 1px solid #949191;padding:5px">9%</td>
+                            <td style=" border: 1px solid #949191;padding:5px">{!invar.inv.SGST__c}</td>
+                             <td style=" border: 1px solid #949191;padding:5px">{!invar.inv.Total_Tax_Amount__c}</td>
+                        </tr>
+                        <tr><td colspan="2" rowspan="2" style=""></td></tr>
+                       </apex:repeat>  
+                    </table>
+                    <table>
+                        <apex:repeat value="{!wrapInvoicetList}" var="invar">
+                        <div style="float:teft;">
+                            <p>Tax Amount (in words) :</p><h3>{!invar.inv.Tax_Amount__c}</h3>
+                        </div>
+                        </apex:repeat>  
+                    </table>
+                    <br/>
+                    <br/><br/><br/><br/>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+                            <td style=" padding:5px">
+                                Company’s PAN       : <b>AAFCG0578B</b>
+                            </td>
+							<td style=" border-top: 1px solid #949191;border-left: 1px solid #949191;border-bottom:0px;padding:5px">
+                                for GSE Commerce Pvt Ltd
+                            </td>
+                         </tr>
+                        <tr >
+                            <td style="padding:5px">Declaration<br/>We declare that this invoice shows the actual price of<br/>
+                                the goods described and that all particulars are true<br/>and correct.
+                            </td>
+                            <td style="padding:5px;border-left: 1px solid #949191">
+                                Authorised Signatory
+                            </td>
+                        </tr>
+                        <tr style="">
+                            <td style=""></td>
+                           
+                        </tr><tr style="">
+                            <td style=""></td>
+                            
+                        </tr>
+                        
+                        <tr><td colspan="2" rowspan="2" style=""></td></tr>
+                        
+                    </table>
+                 </div>
+            </div>
+            <div>
+                <center>This is a Computer Generated Invoice</center>
+            </div>
+         </body>
+</apex:page>

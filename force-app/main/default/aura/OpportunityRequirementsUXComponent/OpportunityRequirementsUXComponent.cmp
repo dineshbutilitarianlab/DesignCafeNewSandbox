@@ -1,0 +1,114 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global" 
+                controller="OpportunityRequirementUXclass">
+   
+    <aura:attribute name="OppRecord" type="object"/>
+    <!-- aura attributes to store data/values -->
+    <aura:attribute name="ListHomeType" type="List"/>
+    <aura:attribute name="ListScopeOfWork" type="List"/>
+    <aura:attribute name="ListInteriorworkneededfor" type="List"/>
+    <aura:attribute name="ListPropertyUsage" type="List"/>
+    <aura:attribute name="ListRequirementDetails" type="List"/>
+    <aura:attribute name="ListCivilWork" type="List"/> 
+    <aura:attribute name="ListFloorArea" type="String"/>
+    
+    <aura:attribute name="disablepicklistvalues" type="Boolean" default ="true"/>
+    
+    <aura:attribute name="HomeType" type="String"/>
+    <aura:attribute name="ScopeOfWork" type="String"/>
+    <aura:attribute name="Interiorworkneededfor" type="String"/>
+    <aura:attribute name="PropertyUsage" type="String"/> 
+    <aura:attribute name="RequirementDetails" type="String"/>
+    <aura:attribute name="CivilWork" type="String"/>
+    <aura:attribute name="FloorArea" type="String"/>
+    <aura:attribute name="MoveIn" type="Date"/>
+  
+   <aura:attribute name="op" type="Opportunity" default="{'sobjectType':'Opportunity', 
+                                                   'Home_Type__c': '',
+                                                   'Scope_Of_Work__c': '',
+                                                   'Interior_work_needed_for__c': '',
+                                                   'Property_Usage__c': '',
+                                                   'Requirement_Details__c': '',  
+                                                   'Civil_Work__c': '',
+                                                   'Floor_Area__c': '',
+                                                   'Move_in__c': ''}"/>
+    
+    <!--Declare Handler-->
+    <aura:handler name="init"  value="{!this}"  action="{!c.doInit}"/> 
+   
+    <br/>
+    
+    <div> Property Type </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListHomeType}" var="HoTy">
+                <lightning:button variant="{!if(HoTy.isSelected == true,'brand','brand-outline')}" label="{!HoTy.value}" name="{!HoTy.value}" title="Neutral action" onclick="{! c.homeTypeButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div> Floor Area(sqft) </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">
+            <lightning:input name="accName" onChange="{!c.onChangeFA}" type="text" maxlength="50" value="{!v.FloorArea}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>
+    
+    <div> Scope Of Work </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListScopeOfWork}" var="ScofWrk">
+                <lightning:button variant="{!if(ScofWrk.isSelected == true,'brand','brand-outline')}" label="{!ScofWrk.value}" name="{!ScofWrk.value}" title="Neutral action" onclick="{! c.ListScopeOfWorkButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div> Site Services Work </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+           <aura:iteration items="{!v.ListCivilWork}" var="CiWrk">
+                <lightning:button variant="{!if(CiWrk.isSelected == true,'brand','brand-outline')}" label="{!CiWrk.value}" name="{!CiWrk.value}" title="Neutral action" onclick="{! c.cwButton }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>  
+    
+    <div> Interior work needed for </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListInteriorworkneededfor}" var="IntWrknedfor">
+                <lightning:button variant="{!if(IntWrknedfor.isSelected == true,'brand','brand-outline')}" label="{!IntWrknedfor.value}" name="{!IntWrknedfor.value}" title="Neutral action" onclick="{! c.ListInteriorworkneededforButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div> Property Usage </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListPropertyUsage}" var="PropUs">
+                <lightning:button variant="{!if(PropUs.isSelected == true,'brand','brand-outline')}" label="{!PropUs.value}" name="{!PropUs.value}" title="Neutral action" onclick="{! c.ListPropertyUsageButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div> Move-In </div>
+    <lightning:layoutItem size="3" padding="around-small">
+        <div class="slds-col">
+            <lightning:input name="accName" onChange="{!c.onChangeMI}" type="date" maxlength="50" value="{!v.MoveIn}" disabled="{!v.disablepicklistvalues}"/>
+        </div>
+    </lightning:layoutItem>
+    
+    <div> Requirement Details </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListRequirementDetails}" var="ReqDetail">
+                <lightning:button variant="{!if(ReqDetail.isSelected == true,'brand','brand-outline')}" label="{!ReqDetail.value}" name="{!ReqDetail.value}" title="Neutral action" onclick="{! c.ListRequirementDetailsButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning:button label="Edit"  title="Edit" onclick="{! c.handleEdit }"/>
+        <lightning:button variant="brand" label="Submit" title="Brand action" onclick="{!c.UpdateOpportunity}" disabled="{!v.disablepicklistvalues}" />
+    </div>
+</aura:component>

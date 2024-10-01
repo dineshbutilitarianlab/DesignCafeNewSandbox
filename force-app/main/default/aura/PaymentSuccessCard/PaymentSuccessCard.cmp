@@ -1,0 +1,26 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="PaymentPreviewCardController">
+    <aura:attribute name="key" type="String" access="private" />
+    <aura:attribute name="paymentInfo" type="Object" access="private" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div>
+        <lightning:card variant="Narrow" title="Payment Successful" iconName="action:approval" footer="">
+            <p class="slds-p-horizontal_small">
+                &nbsp;Congratulations! Your online payment has been completed successfully.
+            </p>
+            <h3>
+                <div style="margin-left:25px;">
+                    <lightning:tile label="{!v.paymentInfo.mCustomerName}" href="">
+                        <p>
+                            <lightning:formattedText linkify="true" value="{!'Email: ' + v.paymentInfo.mCustomerEmail}" /><br/>
+                            Ph: <lightning:formattedText value="{!v.paymentInfo.mCustomerPhone}" />
+                        </p>
+                        <p>
+                            We have received your payment for a sum of
+                            <lightning:formattedText value="{!' ₹' + v.paymentInfo.mTotalAmount}" />
+                        </p>
+                    </lightning:tile>
+                </div>
+            </h3>
+        </lightning:card>
+    </div>
+</aura:component>

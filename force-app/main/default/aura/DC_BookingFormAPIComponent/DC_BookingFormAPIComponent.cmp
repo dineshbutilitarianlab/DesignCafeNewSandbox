@@ -1,0 +1,33 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="DC_BookingFormAPI">
+	<aura:attribute name="recordId" type= "Id"/>
+    <aura:attribute name="wrapperclass" type= "DC_BookingFormAPI.OppDataWrap"/>
+    <aura:attribute name="oppRecord" type= "Opportunity"/>
+    <aura:attribute name="ShowButton" type= "Boolean"/>
+    <aura:attribute name="Isdisabled" type= "Boolean"/>
+    <aura:handler name="init" value="{!this}" action ="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    
+    <aura:attribute name="disablevalues" type="Boolean" default ="false"/>
+    
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}" />
+    <aura:if isTrue = "{!v.ShowButton}">
+        <lightning:card>
+            <div class="slds-align_absolute-center">
+                <div><b>BookingForm Information to Customer Dashboard</b></div>   
+            </div>
+            <div class="slds-align_absolute-center">
+                <div><b>Required Fields:</b></div>   
+            </div>
+            <div class="slds-align_absolute-center">
+                <div><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProjectType, ScopeOfWork, ProposedValue, ModularAmount, &nbsp;&nbsp;&nbsp;&nbsp;SiteServicesAmount, DecorAmount, SignupAmount, SignupValue, Pan,
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProjectAddress, CurrentAddress</b>
+                </div>   
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning:button variant="brand" label="Generate Booking Form" disabled = "{!v.disablevalues}"  title="SendBookingForm" onclick="{! c.SendBookingForm }" />
+            </div>
+        </lightning:card>
+    </aura:if> 
+</aura:component>

@@ -1,0 +1,61 @@
+.image{
+    height:30%;
+    width: 20%;
+    border-radius:8px ;
+      
+}
+.my-button{
+
+    --sds-c-button-brand-color-background: #40a8a8;
+    --sds-c-button-brand-color-background-hover: #bfe2e2;
+    --sds-c-button-brand-color-border:#199797;
+    --sds-c-button-brand-color-border-hover:#008b8b;
+    --sds-c-button-brand-text-color:white;
+    --sds-c-button-brand-text-color-hover:#0d9191;
+    --sds-c-button-sizing-border:2px;
+    align-items: center;
+    font-size: 18px;
+   
+    padding:30px;
+    
+
+}
+.my-button1{
+ margin-top:-40px;
+ margin-left:40%;
+}
+.my-button2{
+ margin-top:-90px;
+margin-left:40%;
+}
+.my-field1{
+margin-top:15px;
+margin-left:65%;
+}
+.my-field2{
+ margin-top:-15px
+}
+
+.my-modal{
+    --sds-c-modal-color-border:rgb(201, 68, 90);
+    --sds-c-modal-header-color-background:rgb(59, 165, 165);
+    --sds-c-modal-header-text-color:White;
+    width: 70% !important;
+    max-width: 70% !important;
+}
+
+.quick-Modal{
+    width: 70% !important;
+    max-width: 70% !important;
+    
+}
+
+.my-card1{
+    margin-bottom:15%;
+   
+}
+.my-card2{
+    margin-top:28px;
+    margin-bottom:10%;
+    
+}

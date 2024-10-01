@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="GenerateInvoiceController">
+    <aura:attribute name="recordId" type= "String"/>
+    <aura:attribute name="ShowButton" type= "Boolean"/>
+    <aura:attribute name="Isdisabled" type= "Boolean"/>
+    <aura:handler name="init" value="{!this}" action ="{!c.doInit}"/>
+    <aura:if isTrue = "{!v.ShowButton}">
+        <lightning:button variant="brand" label="Generate Invoice" disabled = "{!v.Isdisabled}" title="Generate Invoice" onclick="{! c.generateInvoice }" />    
+    </aura:if>
+</aura:component>

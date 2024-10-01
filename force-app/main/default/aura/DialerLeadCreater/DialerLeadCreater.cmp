@@ -1,0 +1,20 @@
+<aura:component>
+    <lightning:card iconName="action:new_lead" title="Create Lead">
+        <lightning:recordEditForm aura:id="recordEditForm"
+                                  objectApiName="Lead"
+                                  onsuccess="{!c.handleSuccess}">
+            <lightning:messages />
+            <div class="slds-p-horizontal--small">
+                <lightning:inputField fieldName="FirstName" />
+                <lightning:inputField fieldName="LastName" />
+                <lightning:inputField fieldName="MobilePhone" />
+                <lightning:inputField fieldName="City" />
+                <lightning:inputField fieldName="Approx_Budget__c" />
+                <lightning:inputField fieldName="CallUniqueI__c" />
+                <div class="slds-align_absolute-center">
+                    <lightning:button class="slds-m-top_small" variant="brand" type="submit" label="Create Lead" />
+                </div>
+            </div>
+        </lightning:recordEditForm>
+    </lightning:card>
+</aura:component>

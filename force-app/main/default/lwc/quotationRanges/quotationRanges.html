@@ -1,0 +1,52 @@
+<template>
+    <div class="container">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table slds-table_bordered slds-table_col-bordered">
+            <thead>
+                <tr>
+                    <th>Ranges</th>
+                    <th>Qarpentri</th>
+                    <th>Aria</th>
+                    <th>Premium</th>
+                    <th>Signature</th>
+                    <th>Site Services</th>
+                </tr>
+            </thead>
+            <tbody>
+            <template for:each={rowData} for:item="row">
+                <tr key={row.id}>
+                    <th>{row.header}</th>
+                    <template for:each={row.cells} for:item="cell">
+                        <td key={cell.id}>
+                            <template if:true={cell.isComboBox}>
+                                <lightning-combobox
+                                    data-field-name={cell.fieldname}
+                                    label=""
+                                    value={cell.value}
+                                    options={cell.options}
+                                    onchange={handleInputChange}
+                                ></lightning-combobox>
+                            </template>
+                            <template if:false={cell.isComboBox}>
+                                <lightning-input 
+                                    value={cell.value} 
+                                    data-id={cell.id} 
+                                    data-row-id={row.id} 
+                                    data-field={cell.field} 
+                                    onchange={handleInputChange}
+                                    data-field-name={cell.fieldname}
+                                ></lightning-input>
+                            </template>
+                        </td>
+                    </template>
+                </tr>
+            </template>
+        </tbody>
+        </table>
+        <div class="slds-m-top_medium">
+            <div class="button-container"> 
+                <lightning-button label="Save" onclick={handleUpdateRecord} variant="brand"></lightning-button>
+                <lightning-button label="Cancel" onclick={handleCancel} variant="neutral"></lightning-button>    
+            </div>
+        </div>
+    </div>
+</template>

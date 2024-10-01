@@ -1,0 +1,14 @@
+<apex:page standardController="opportunity" extensions="DCBookingForm" lightningStylesheets="true" showHeader="false">
+    <apex:form >
+        <center>   
+            <apex:commandButton value="Save Pdf" action="{!SaveFile}"/>
+            &nbsp;&nbsp;&nbsp;
+            <!--    <apex:commandButton value="Email Pdf" action="{!SendFile}"/>  
+            &nbsp;&nbsp;&nbsp;  -->
+            <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            <center>   
+                <iframe height="600px" id="theIframe" name="theIframe" src="/apex/DCBookingFormSendPDF?id={!opp.id}" width="70%"></iframe> 
+            </center>
+        </center> 
+    </apex:form>    
+</apex:page>

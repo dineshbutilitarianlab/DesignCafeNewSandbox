@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="MeetingHistoryLead">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="meetingVenue" type="String"/>
+    <aura:attribute name="meetingType" type="String"/>
+    <aura:attribute name="editMode" type="Boolean"/>
+    <aura:attribute name="editModeVisibility" type="Boolean"/>
+    <aura:handler name = "init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <ui:inputSelect disabled="{!v.editMode}" value="{!v.meetingType}" label="Meeting Type" aura:id="meeting_Type" required="true"/>
+            </div>
+            <div class="slds-col">
+                <ui:inputSelect disabled="{!v.editMode}" value="{!v.meetingVenue}" label="Meeting Venue" aura:id="meeting_Venue" required="true"/>
+            </div>
+            <div class="slds-col">
+                <h4 class="header">Meeting Scheduled Date/Time</h4>
+                <lightning:input disabled="{!v.editMode}" variant="label-hidden" type="datetime" aura:id="Meeting_Scheduled_Date" label="Meeting Scheduled Date/Time" required="true"/>
+            </div>
+        </div>
+        <div class="slds-align_absolute-center" style="height:5rem">
+            <lightning:button label="Edit" disabled="{!v.editModeVisibility}" title="Edit" onclick="{! c.handleEdit }"/>
+            <lightning:button variant="brand" disabled="{!v.editMode}" label="Save" title="Save" onclick="{! c.handleSave }" />
+        </div>
+    </lightning:card>
+</aura:component>

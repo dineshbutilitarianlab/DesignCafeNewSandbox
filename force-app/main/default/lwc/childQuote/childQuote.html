@@ -1,0 +1,79 @@
+<template>
+    <lightning-quick-action-panel header="Add Payment" class="my-modal">  
+        <!-- Quotes Card Start -->
+        <lightning-card  title="">
+            <lightning-combobox
+                name="quotes"
+                label="Quote"
+                value={value}
+                placeholder="Select Quote"
+                options={options}
+                onchange={handleDropdownChange}
+                style="width: 180px;">
+            </lightning-combobox>
+            <table if:true={quotes.Id} style="margin-top: 10px;" class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+            <thead>
+                <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" style="width: 500px;" title="Name">QuoteName</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="AccountName">AccountName</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="QuoteNo">QuoteNo</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="LatestQuote">LatestQuote</div>
+                </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="slds-hint-parent">
+                <th scope="row">
+                    <div class="slds-truncate" title={quotes.Name}><a href={quotes.quoteUrl} target="_blank">{quotes.Name}</a></div>
+                </th>
+                <td role="gridcell">
+                    <div class="slds-truncate"><a href={quotes.accountUrl} target="_blank">{quotes.Account.Name}</a></div>
+                </td>
+                <td role="gridcell">
+                    <div class="slds-truncate">{quotes.QuoteNumber}</div>
+                </td>
+                <td role="gridcell">
+                    <div class="slds-truncate"><lightning-input type="checkbox" checked={quotes.Latest_Quote__c} disabled="true"></lightning-input></div>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+            <table if:true={quotes.Id} style="margin-top: 10px;" class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+            <thead>
+                <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Sign-up value(Incl. GST)">Sign-up value(Incl. GST)</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Shipping Address">Shipping Address</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Billing Address">Billing Address</div>
+                </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="slds-hint-parent">
+                <td role="gridcell">
+                    <div class="slds-truncate">{quotes.Opportunity.Amount}</div>
+                </td>
+                <td role="gridcell">
+                    <div class="slds-truncate">{quotes.Account.ShippingStreet} <br>{quotes.Account.ShippingCity}&nbsp;{quotes.Account.ShippingPostalCode}<br>{quotes.Account.ShippingState} <br>{quotes.Account.ShippingCountry}</div>
+                </td>
+                <td role="gridcell">
+                    <div class="slds-truncate">{quotes.Account.BillingStreet} <br>{quotes.Account.BillingCity}&nbsp;{quotes.Account.BillingPostalCode}<br>{quotes.Account.BillingState} <br>{quotes.Account.BillingCountry}</div>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+      </lightning-card>
+      <!-- Quotes Cared End -->
+    </lightning-quick-action-panel>    
+  </template>

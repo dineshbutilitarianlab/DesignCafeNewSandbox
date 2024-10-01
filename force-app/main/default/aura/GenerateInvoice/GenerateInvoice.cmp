@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"  
+                controller="milestoneInvoiceGenerator">
+    <aura:attribute name = "recordId" type="String"/>
+    <aura:attribute name = "ShowButton" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+      <aura:if isTrue="{!v.ShowButton}">  
+        <lightning:card>
+            <div class="slds-align_absolute-center">
+                <lightning:button variant="brand" label="Regenerate Invoice" title="Update Invoice" onclick="{!c.updateInvoice }"/>
+            </div>
+        </lightning:card>
+    </aura:if> 
+</aura:component>

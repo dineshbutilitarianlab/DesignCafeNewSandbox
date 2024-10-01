@@ -1,0 +1,414 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global" 
+                controller="RequirementsUX">
+    
+    <aura:attribute name="LeadRecord" type="object"/>
+    <!-- aura attributes to store data/values -->
+    <aura:attribute name="ListHomeType" type="List"/>
+    <aura:attribute name="ListScopeOfWork" type="List"/>
+    <aura:attribute name="ListInteriorworkneededfor" type="List"/>
+    <aura:attribute name="ListEat" type="List"/>
+    <aura:attribute name="ListPropertyUsage" type="List"/>
+    <aura:attribute name="ListRequirementDetails" type="List"/>
+    <aura:attribute name="ListCivilWork" type="Boolean"/> 
+    <aura:attribute name="ListSiteServiceNeededfor" type="List"/>     
+    <aura:attribute name="ListFloorArea" type="String"/>
+    <aura:attribute name="ListOthersforLive" type="String"/>   
+    <aura:attribute name="ListOthersforPlay" type="String"/> 
+    <aura:attribute name="ListHowmanykidsdoyouhave" type="String"/> 
+    <aura:attribute name="ListAgeofFirstkid" type="String"/> 
+    <aura:attribute name="ListGenderofFirstkid" type="String"/> 
+    <aura:attribute name="ListAgeofSecondkid" type="String"/> 
+    <aura:attribute name="ListGenderofSecondkid" type="String"/>   
+    <aura:attribute name="ListAgeofThirdkid" type="String"/>
+    <aura:attribute name="ListGenderofThirdkid" type="String"/>
+    <aura:attribute name="ListAgeofFourthkid" type="String"/>
+    <aura:attribute name="ListGenderofFourthkid" type="String"/>
+    <aura:attribute name="ListDoyouhavepets" type="String"/>    
+    <aura:attribute name="ListWhowillbestayinginthehouse" type="List"/>    
+    <aura:attribute name="ListLive" type="List"/>     
+    <aura:attribute name="ListPlay" type="List"/>      
+    <aura:attribute name="ListWhereareyoucurrentlylocated" type="String"/>
+    <aura:attribute name="ListWhichlanguageareyoumostcomfortable" type="String"/>
+    <aura:attribute name="ListIfotherlanguagespleasespecify" type="String"/>  
+    <aura:attribute name="ListWhenwouldyouliketohavethehomeMap" type="Map"/> 
+    <aura:attribute name="ListWorkMap" type="Map"/> 
+    <aura:attribute name="ListCabReqMap" type="Map"/>   
+    <aura:attribute name="ListDesignerTeamName" type="String"/>     
+    <aura:attribute name="disablepicklistvalues" type="Boolean" default ="true"/>
+    
+    <aura:attribute name="HomeType" type="String"/>
+    <aura:attribute name="ScopeOfWork" type="String"/>
+    <aura:attribute name="Interiorworkneededfor" type="String"/>
+    <aura:attribute name="Eat" type="String"/>    
+    <aura:attribute name="PropertyUsage" type="String"/> 
+    <aura:attribute name="RequirementDetails" type="String"/>
+    <aura:attribute name="CivilWork" type="Boolean"/>
+    <aura:attribute name="SiteServiceNeededfor" type="String"/>     
+    <aura:attribute name="FloorArea" type="String"/>
+    <aura:attribute name="OthersforLive" type="String"/> 
+    <aura:attribute name="OthersforPlay" type="String"/> 
+    <aura:attribute name="Howmanykidsdoyouhave" type="String"/> 
+    <aura:attribute name="AgeofFirstkid" type="String"/> 
+    <aura:attribute name="GenderofFirstkid" type="String"/> 
+    <aura:attribute name="AgeofSecondkid" type="String"/> 
+    <aura:attribute name="GenderofSecondkid" type="String"/> 
+    <aura:attribute name="AgeofThirdkid" type="String"/> 
+    <aura:attribute name="GenderofThirdkid" type="String"/> 
+    <aura:attribute name="AgeofFourthkid" type="String"/> 
+    <aura:attribute name="GenderofFourthkid" type="String"/> 
+    <aura:attribute name="Doyouhavepets" type="String"/>   
+    <aura:attribute name="Whowillbestayinginthehouse" type="String"/>       
+    <aura:attribute name="Live" type="String"/>    
+    <aura:attribute name="Play" type="String"/> 
+    <aura:attribute name="Whereareyoucurrentlylocated" type="String"/> 
+    <aura:attribute name="Whichlanguageareyoumostcomfortable" type="String"/> 
+    <aura:attribute name="Ifotherlanguagespleasespecify" type="String"/>     
+    <aura:attribute name="MoveIn" type="Date"/>
+    <aura:attribute name="PropertyPossessionDate" type="Date"/>
+    <aura:attribute name="WhenwouldyouliketohavethehomeMap" type="Map"/>
+    <aura:attribute name="WorkMap" type="Map"/> 
+    <aura:attribute name="CabReqMap" type="Map"/> 
+    <aura:attribute name="DesignerTeamName" type="String"/>      
+   <aura:attribute name="ld" type="Lead" default="{'sobjectType':'Lead', 
+                                                   'Home_Type__c': '',
+                                                   'Scope_Of_Work__c': '',
+                                                   'Interior_work_needed_for__c': '',
+                                                   'Eat' : '',
+                                                   'Property_Usage__c': '',
+                                                   'Requirement_Details__c': '',
+                                                   'Civil_Work__c': '',
+                                                   'Work__c': '',
+                                                   'Cab_Req__c': '',
+                                                   'Live__c': '',
+                                                   'Play__c': '',
+                                                   'Area__c': '',
+                                                   'Others_for_Live__c': '',
+                                                   'Others_for_Play__c': '',
+                                                  'How_many_kids_do_you_have__c': '',
+                                                  'Age_of_First_kid__c': '',
+                                                  'Gender_of_First_kid__c': '',
+                                                  'Age_of_Second_kid__c': '',
+                                                  'Gender_of_Second_kid__c': '',
+                                                  'Age_of_Third_kid__c': '',
+                                                  'Gender_of_Third_kid__c': '',
+                                                  'Age_of_Fourth_kid__c': '',
+                                                  'Gender_of_Fourth_kid__c': '',
+                                                  'Designer_Team_Name__c': '',
+                                                  'Do_you_have_pets__c': '',
+                                                  'Who_will_be_staying_in_the_house__c' : '',
+                                                  'Where_are_you_currently_located__c' : '',
+                                                  'Which_language_are_you_most_comfortable__c' : '',
+                                                  'If_other_languages_please_specify__c' : '',
+                                                   'Move_in__c': '',
+                                                  'Site_Service_Needed_for__c': '',
+                                                  'When_would_you_like_to_have_the_home__c': '',
+                                                   'Property_Possession_Date__c': ''}"/>
+    
+    <!--Declare Handler-->
+    <aura:handler name="init"  value="{!this}"  action="{!c.doInit}"/> 
+        
+    
+      <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning:button label="Edit"  title="Edit" onclick="{! c.handleEdit }"/>
+    </div>  
+    
+    
+    <div> Property Type </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListHomeType}" var="HoTy">
+                <lightning:button variant="{!if(HoTy.isSelected == true,'brand','brand-outline')}" label="{!HoTy.value}" name="{!HoTy.value}" title="Neutral action" onclick="{! c.homeTypeButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <div> Floor Area(sqft) </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeFA}" type="text" maxlength="50" value="{!v.FloorArea}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>
+      
+    
+    <div> Scope Of Work </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListScopeOfWork}" var="ScofWrk">
+                <lightning:button variant="{!if(ScofWrk.isSelected == true,'brand','brand-outline')}" label="{!ScofWrk.value}" name="{!ScofWrk.value}" title="Neutral action" onclick="{! c.ListScopeOfWorkButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    
+    <div> Site Services / Civil Work </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+           <!-- <aura:iteration items="{!v.ListCivilWork}" var="CiWrk">
+                <lightning:button variant="{!if(CiWrk.isSelected == true,'brand','brand-outline')}" label="{!CiWrk.value}" name="{!CiWrk.value}" title="Neutral action" onclick="{!c.cwButton }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration> -->
+            <lightning:input type="toggle" name="toggleButton" aura:id="tglbtn" label="Yes/No" 
+                 messageToggleActive="Yes" messageToggleInactive="No" 
+                 checked="{!v.CivilWork}"            
+                 onchange="{!c.getToggleButtonValue}" disabled="{!v.disablepicklistvalues}" />
+        </lightning:layoutItem>
+    </lightning:layout>  
+    
+   
+    <div> Site Service Needed for? </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListSiteServiceNeededfor}" var="SSNF">
+                <lightning:button variant="{!if(SSNF.isSelected == true,'brand','brand-outline')}" label="{!SSNF.value}" name="{!SSNF.value}" title="Neutral action" onclick="{!c.ListSSNFButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>          
+    
+    
+    <div> Interior work needed for </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListInteriorworkneededfor}" var="IntWrknedfor">
+                <lightning:button variant="{!if(IntWrknedfor.isSelected == true,'brand','brand-outline')}" label="{!IntWrknedfor.value}" name="{!IntWrknedfor.value}" title="Neutral action" onclick="{! c.ListInteriorworkneededforButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    
+    <div> Property Usage </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListPropertyUsage}" var="PropUs">
+                <lightning:button variant="{!if(PropUs.isSelected == true,'brand','brand-outline')}" label="{!PropUs.value}" name="{!PropUs.value}" title="Neutral action" onclick="{! c.ListPropertyUsageButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+  
+    <lightning:layoutItem size="3" padding="around-small">
+        
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+       <lightning:input name="accName" onChange="{!c.onChangeMI}" type="date" label="Move-In" maxlength="50" value="{!v.MoveIn}" disabled="{!v.disablepicklistvalues}"/>
+       </div>
+        <div class="slds-col">
+        <lightning:input name="accName" onChange="{!c.onChangePPD}" type="date" label="Property Possession Date" maxlength="50" value="{!v.PropertyPossessionDate}" disabled="{!v.disablepicklistvalues}"/>
+        </div>
+            </div>
+    </lightning:layoutItem>
+  
+ 
+    
+    <div> Requirement Details </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListRequirementDetails}" var="ReqDetail">
+                <lightning:button variant="{!if(ReqDetail.isSelected == true,'brand','brand-outline')}" label="{!ReqDetail.value}" name="{!ReqDetail.value}" title="Neutral action" onclick="{! c.ListRequirementDetailsButtons }" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+      <div> Eat </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListEat}" var="Eat">
+                <lightning:button variant="{!if(Eat.isSelected == true,'brand','brand-outline')}" label="{!Eat.value}" name="{!Eat.value}" title="Neutral action" onclick="{! c.ListEatButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>      
+    
+    
+              <div class="form-group">
+                <lightning:select aura:id="WorkPicklist" value="{!v.ld.Work}" onchange="{!c.OnChangeWork}" name="WorkPicklist" label="Work" disabled="{!v.disablepicklistvalues}">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.WorkMap}" var="i" indexVar="key">
+                        <option text="{!i.value}" value="{!i.key}" selected="{!i.key==v.ld.Work}" />
+                    </aura:iteration>
+                </lightning:select>
+            </div>    
+       <br/>  
+    
+        
+      <div> Live </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListLive}" var="Live">
+                <lightning:button variant="{!if(Live.isSelected == true,'brand','brand-outline')}" label="{!Live.value}" name="{!Live.value}" title="Neutral action" onclick="{! c.ListLiveButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>      
+
+    <div> Others for Live </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeOFL}" type="text" maxlength="50" value="{!v.OthersforLive}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+      <div> Play </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListPlay}" var="Play">
+                <lightning:button variant="{!if(Play.isSelected == true,'brand','brand-outline')}" label="{!Play.value}" name="{!Play.value}" title="Neutral action" onclick="{! c.ListPlayButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout>    
+    
+    <div> Others for Play </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeOFP}" type="text" maxlength="50" value="{!v.OthersforPlay}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> How many kids do you have? </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeHMKDYH}" type="text" maxlength="50" value="{!v.Howmanykidsdoyouhave}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> Age of First kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeAOFK}" type="text" maxlength="50" value="{!v.AgeofFirstkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> Gender of First kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeGOFK}" type="text" maxlength="50" value="{!v.GenderofFirstkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> Age of Second kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeAOSK}" type="text" maxlength="50" value="{!v.AgeofSecondkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+    
+    <div> Gender of Second kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeGOSK}" type="text" maxlength="50" value="{!v.GenderofSecondkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>       
+        
+
+    <div> Age of Third kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeAOTK}" type="text" maxlength="50" value="{!v.AgeofThirdkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>       
+    
+    <div> Gender of Third kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeGOTK}" type="text" maxlength="50" value="{!v.GenderofThirdkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> Age of Fourth kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeAOFK}" type="text" maxlength="50" value="{!v.AgeofFourthkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> Gender of Fourth kid </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeGOFK}" type="text" maxlength="50" value="{!v.GenderofFourthkid}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+    <div> Do you have pets? </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeDYHP}" type="text" maxlength="50" value="{!v.Doyouhavepets}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    <br/>   
+
+      <div> Who will be staying in the house? </div>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" mediumDeviceSize="12" padding="around-small">
+            <aura:iteration items="{!v.ListWhowillbestayinginthehouse}" var="Wwbsith">
+                <lightning:button variant="{!if(Wwbsith.isSelected == true,'brand','brand-outline')}" label="{!Wwbsith.value}" name="{!Wwbsith.value}" title="Neutral action" onclick="{! c.ListWhowillbestayinginthehouseButtons}" disabled="{!v.disablepicklistvalues}"/>
+            </aura:iteration>
+        </lightning:layoutItem>
+    </lightning:layout> 
+    
+
+            <div class="form-group">
+                <lightning:select aura:id="WhenwouldyouliketohavethehomePicklist" value="{!v.ld.Whenwouldyouliketohavethehome}" onchange="{!c.OnChangeWWYLTHH}" name="WhenwouldyouliketohavethehomePicklist" label="When would you like to have the home" disabled="{!v.disablepicklistvalues}">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.WhenwouldyouliketohavethehomeMap}" var="i" indexVar="key">
+                        <option text="{!i.value}" value="{!i.key}" selected="{!i.key==v.ld.Whenwouldyouliketohavethehome}" />
+                    </aura:iteration>
+                </lightning:select>
+            </div>    
+    
+
+    
+    <div> Where are you currently located? </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeWAYCL}" type="text" maxlength="50" value="{!v.Whereareyoucurrentlylocated}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+    
+
+    <div> Which language are you most comfortable </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeWLAYMC}" type="text" maxlength="50" value="{!v.Whichlanguageareyoumostcomfortable}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+     
+
+    <div> If other languages please specify </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeIOLPS}" type="text" maxlength="50" value="{!v.Ifotherlanguagespleasespecify}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>
+         
+              <div class="form-group">
+                <lightning:select aura:id="CabReqPicklist" value="{!v.ld.CabReq}" onchange="{!c.OnChangeCabReq}" name="CabReqPicklist" label="Cab Req?" disabled="{!v.disablepicklistvalues}">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.CabReqMap}" var="i" indexVar="key">
+                        <option text="{!i.value}" value="{!i.key}" selected="{!i.key==v.ld.CabReq}" />
+                    </aura:iteration>
+                </lightning:select>
+            </div>  
+     <br/>  
+    
+    <div> Designer Team Name </div>
+    <lightning:layoutItem size="3" padding="around-small">
+    <div class="form-group">  
+        <lightning:input name="accName" onChange="{!c.onChangeDTN}" type="text" maxlength="50" value="{!v.DesignerTeamName}" disabled="{!v.disablepicklistvalues}"/>
+    </div>
+    </lightning:layoutItem>    
+    
+    
+      <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning:button variant="brand" label="Submit" title="Brand action" onclick="{!c.UpdateLead}" disabled="{!v.disablepicklistvalues}" />
+    </div>     
+
+</aura:component>

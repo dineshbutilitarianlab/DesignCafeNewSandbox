@@ -1,0 +1,153 @@
+<template>
+
+    <lightning-quick-action-panel header="Payment Request" class="my-modal">
+  
+    <!-- Quotes Card Start -->
+    <lightning-card  title="">
+      <lightning-combobox
+          name="quotes"
+          label="Quote"
+          value={value}
+          placeholder="Select Quote"
+          options={options}
+          onchange={handleDropdownChange}
+          style="width: 180px;">
+      </lightning-combobox>
+      <table if:true={quotes.Id} style="margin-top: 10px;" class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th class="" scope="col">
+              <div class="slds-truncate" style="width: 500px;" title="Name">QuoteName</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="AccountName">AccountName</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="QuoteNo">QuoteNo</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="LatestQuote">LatestQuote</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="slds-hint-parent">
+            <th scope="row">
+              <div class="slds-truncate" title={quotes.Name}><a href={quotes.quoteUrl} target="_blank">{quotes.Name}</a></div>
+            </th>
+            <td role="gridcell">
+              <div class="slds-truncate"><a href={quotes.accountUrl} target="_blank">{quotes.Account.Name}</a></div>
+            </td>
+            <td role="gridcell">
+              <div class="slds-truncate">{quotes.QuoteNumber}</div>
+            </td>
+            <td role="gridcell">
+              <div class="slds-truncate"><lightning-input type="checkbox" checked={quotes.Latest_Quote__c} disabled="true"></lightning-input></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table if:true={quotes.Id} style="margin-top: 10px;" class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Sign-up value(Incl. GST)">Sign-up value(Incl. GST)</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Shipping Address">Shipping Address</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Billing Address">Billing Address</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="slds-hint-parent">
+            <td role="gridcell">
+              <div class="slds-truncate">{quotes.Opportunity.Amount}</div>
+            </td>
+            <td role="gridcell">
+              <div class="slds-truncate">{quotes.Account.ShippingStreet} <br>{quotes.Account.ShippingCity}&nbsp;{quotes.Account.ShippingPostalCode}<br>{quotes.Account.ShippingState} <br>{quotes.Account.ShippingCountry}</div>
+            </td>
+            <td role="gridcell">
+              <div class="slds-truncate">{quotes.Account.BillingStreet} <br>{quotes.Account.BillingCity}&nbsp;{quotes.Account.BillingPostalCode}<br>{quotes.Account.BillingState} <br>{quotes.Account.BillingCountry}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </lightning-card>
+    <!-- Quotes Cared End -->
+    
+         <div class="my-card1">
+           <div class="my-text"><p><b>{modProjCost}</b></p></div>
+           <!--<div> --> 
+        <lightning-card>
+          
+        
+          <img  src="https://www.sleekworld.com/content/dam/sleek/kitchen-landing/TheRomantic%20Inspiration.jpg" class="image"></img>
+          <template if:true={tagVisible}> 
+          <lightning-button label="5%" title="Non-primary action" onclick={handleClick} variant="brand" class="my-button" disabled={modDisabled} ></lightning-button>
+          </template>
+          <lightning-button label="10%" title="Non-primary action" onclick={handleClick} variant="brand" class="slds-m-left_x-small my-button" disabled={modDisabled}></lightning-button>
+        <lightning-input type="checkbox" label="Custom Amount" name="input1" class="slds-float_right custommod" onchange={handleShowPrice}></lightning-input>
+        <template if:true={priceValidation}> 
+       <lightning-input type="number" label="Price" onchange={handleChange} onblur={handlePrice} value={customModPrice} min="20000"    message-when-range-underflow={priceValidationMsg} formatter="currency" step=".01" style="width:125px" class="slds-float_right my-button1" read-only={showPrice1}></lightning-input>    
+       </template>
+       <template if:false={priceValidation}> 
+       <lightning-input type="number" label="Price" onchange={handleChange} value={customModPrice} formatter="currency" step=".01" style="width:125px" class="slds-float_right my-button1" read-only={showPrice1}></lightning-input>    
+       </template>
+       <lightning-input type="number" label="Calculated Amount" formatter="currency" step=".01" value={calcAmount} style="width:125px" class="slds-float_right my-field1" read-only="true"></lightning-input>
+  
+        <!--</div> -->  
+        </lightning-card>
+        </div>
+         
+        
+        <!-- Site services -->
+  
+        <div class="my-card2">
+           <div class="my-text"><p><b>{siteServiceCost}</b></p></div>
+        <lightning-card >
+          
+        <!--  <div class="slds-box"> -->
+        <img src="https://media.istockphoto.com/vectors/construction-worker-laying-bricks-vector-id502585137?k=20&m=502585137&s=612x612&w=0&h=lJiLLc3iBjIgnI_pEJEDWRLZsX8em6I6EkbKT62M56I=" alt=site class="image"/>
+        <template if:true={tagVisible}> 
+           <lightning-button label="5%" title="Non-primary action"  disabled={disableButton} onclick={handleClick2} variant="brand" class="my-button"></lightning-button>
+        </template>
+        <lightning-button label="10%" title="Non-primary action" onclick={handleClick2} variant="brand" class="slds-m-left_x-small my-button" disabled={modDisabled}></lightning-button>
+        <lightning-input type="checkbox" label="Custom Amount" name="input2" class="slds-float_right custommodal" onchange={handleSecShowPrice}></lightning-input>
+          <lightning-input type="number" label="Price" value={customPrice} onchange={handleChange2} formatter="currency" step=".01" style="width:125px" class="slds-float_right my-button2" read-only={showPrice2}></lightning-input>
+        <lightning-input type="number" label="Calculated Amount" formatter="currency" step=".01" value={calcAmount2} read-only="true" style="width:125px" class="slds-float_right my-field2"></lightning-input>
+  
+  
+        <!--  </div> -->
+  
+        </lightning-card>
+        </div>
+  
+        <div>
+        <lightning-card title="Payment Description">
+            <lightning-datatable
+            key-field="id"
+            data={colData}
+            hide-checkbox-column
+            columns={dataCols}>
+  
+            </lightning-datatable>
+            
+  
+        </lightning-card>
+  
+        </div>
+  
+      
+  
+         <div slot="footer">
+           <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+           <button class="slds-button slds-button_brand" disabled={disableReqButton} onclick={requestPayment} title="Request Payment">Request Payment</button>
+         </div>
+  
+       
+       </lightning-quick-action-panel> 
+    
+  </template>

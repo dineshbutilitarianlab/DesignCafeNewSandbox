@@ -1,0 +1,11 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="LeadDesignOwnershipAssignmentController">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="message" default="Please Wait..." type="String" access="private" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div style="width:100%; height:100%;">
+        <p style="float:middle;">
+            {!v.message}
+        </p>
+    </div>
+</aura:component>

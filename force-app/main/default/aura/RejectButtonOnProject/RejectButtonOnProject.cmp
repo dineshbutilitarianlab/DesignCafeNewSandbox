@@ -1,0 +1,37 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId" access="global" 
+                controller="MilestoneQuickActionController">
+    <aura:attribute name="reasonforReject" type="String" />
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h4 class="title slds-text-heading--medium" >Reject Project</h4>
+    </div>
+    
+    <!-- MODAL BODY / INPUT FORM -->    
+    <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative" aura:id="modalbody" id="modalbody">
+      
+            <lightning:textarea class="customWidth" name="rejectReason" label="Reason for Rejection" value="{!v.reasonforReject}"/>
+    
+        
+    </div>   <!-- End of Modal Content -->  
+    
+    <!-- MODAL FOOTER -->
+    <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+        <div class="forceChangeRecordTypeFooter">
+            <lightning:button class="slds-button slds-button--brand" label="Save"  name="save" onclick="{!c.onSave}"/>
+            <lightning:button class="slds-button slds-button_neutral" label="Cancel"  name="cancel" onclick="{!c.onCancel}"/>
+        </div>
+    </div>
+</aura:component>

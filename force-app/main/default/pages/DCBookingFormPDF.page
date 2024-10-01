@@ -1,0 +1,479 @@
+<apex:page extensions="DCBookingForm" renderas="pdf" standardController="opportunity" applyHtmlTag="false" applyBodyTag="false" showHeader="false">
+    <!--  <img src="{!($Resource.Logo)}" width="10%" height="10%"
+style="position: fixed;background-repeat:repeat;left: 0cm; top:0cm; z-index:0"/>  -->
+    <head>
+        <style>
+            body {
+            <!--     background-image: url("https://dc--uat--c.visualforce.com/resource/1588947366000/Logo?");   --> 
+            }
+            input[type="text"] {
+            } 
+        </style>
+        <style>
+            .doc-table__tbl-section {
+            background: #D23A95;
+            color: #fff;
+            }
+        </style>
+        <style type="text/css">
+            @page{
+            size:21cm 29.7cm; 
+            @bottom-right{
+            content:"Page " counter(page) " of " counter(pages);
+            }
+            }    
+        </style> 
+    </head>
+    <apex:form >
+        <img src="{!($Resource.BForm2)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="left" />
+        <br/>
+        <table style="width:100%" border="0" cellspacing="0">          
+            <tr>
+                <td style="width: 300px; height: 75px; color:BLUE"  align="left"><h2 ><b>BOOKING FORM  </b> </h2></td>
+                <td align="right">
+                    <img src="https://dc--uat--c.visualforce.com/resource/1588947366000/Logo?" style="background-color:#D3D3D3; width: 100px; height: 100px" align="right" />  
+                </td>
+            </tr> 
+        </table> 
+        <tr>
+            <td> 
+                <span style="font-size: 19px;">Date &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
+                    <apex:outputText style="font-size: 19px;" value="{0,date,dd'-'MM'-'yyyy}">
+                        <apex:param value="{!opp.CloseDate}" /> 
+                    </apex:outputText>
+                </span>
+            </td>
+        </tr> 
+        <br/>
+
+        <table  border="0" width="680" height="600" cellspacing="0" cellpadding="2">
+            <tr>
+                <!--   <td style="font-size: 20px;">1)</td> -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;DC Code: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Customer_ID__c}</td> 
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">1)</td> -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Client Name: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.account.name}</td> 
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">2)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Contact No: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Mobile__c}</td>                
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">3)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Email ID: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Email__c}</td>                  
+            </tr>
+            <tr>
+                <!--  <td style="font-size: 20px;">4)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Project Type: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Home_Type__c}</td>              
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">5)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Project Address: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:65px">{!opp.account.ShippingStreet}&nbsp;{!opp.account.ShippingCity}&nbsp;{!opp.account.ShippingState}&nbsp;{!opp.account.ShippingCountry}&nbsp;{!opp.account.ShippingPostalCode}</td>               
+            </tr>              
+            <tr>
+                <!--   <td style="font-size: 20px;">6)</td> -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Current Address: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:65px">{!opp.account.BillingStreet}&nbsp;{!opp.account.BillingCity}&nbsp;{!opp.account.BillingState}&nbsp;{!opp.account.BillingCountry}&nbsp;{!opp.account.BillingPostalCode}</td>               
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">7)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Advance Paid: </td>
+                <td>
+                    <apex:outputText style="font-family:Calibri;font-size: 16px;height:25px" value="{0, number, 0,000.00}">
+                        <apex:param value="{!opp.Signup_Amount__c}" />
+                    </apex:outputText>
+                </td>          
+            </tr>           
+            <tr>
+                <!--   <td style="font-size: 20px;">8)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Budget: </td>
+                <td>
+                    <apex:outputText style="font-family:Calibri;font-size: 16px;height:25px" value="{0, number, 000,000.00}">
+                        <apex:param value="{!opp.Amount}" />
+                    </apex:outputText>
+                </td>        
+            </tr>           
+            <tr>
+                <!--   <td style="font-size: 20px;">9)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;1st Met by: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.X1st_Meeting_Person__r.name}</td>               
+            </tr>           
+            <tr>
+                <!--    <td style="font-size: 20px;">10)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;2nd Met by: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.X2nd_Meeting_Person__r.name}</td>            
+            </tr>          
+            <tr>
+                <!--   <td style="font-size: 20px;">11)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;3rd Met by: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.X3rd_Meeting_Person__r.name}</td>           
+            </tr>       
+            <tr>
+                <!--   <td style="font-size: 20px;">12)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Payment Date: </td>
+                <td>
+                    <apex:outputText style="font-family:Calibri;font-size: 16px;height:25px" value="{0,date,dd'-'MM'-'yyyy}">
+                        <apex:param value="{!opp.CloseDate}" /> 
+                    </apex:outputText>
+                </td>    
+            </tr>      
+            <tr>
+                <!--   <td style="font-size: 20px;">13)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Payment Mode: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Payment_Mode__c}</td>          
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">14)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Possession Status: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Possession_Status__c}</td>          
+            </tr>
+            <tr>
+                <!--   <td style="font-size: 20px;">15)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Delivery time from Design Signoff: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Delivery_time_from_design_signoff__c}</td>
+            </tr> 
+            <tr>
+                
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Frames for all external Doors and Windows are fixed(Basic): </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Frames_for_all_external_Doors_Windows__c}</td>
+            </tr>       
+
+<tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;The Doors and Windows are installed(Required): </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.The_Doors_Windows_are_installed_Requir__c}</td>
+            </tr>      
+<tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;All walls are completed(Basic): </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.All_walls_are_completed_Required__c}</td>
+            </tr>      
+<tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Putty and 1 coat of plastering is completed on all walls(Required): </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Putty_and_1_coat_of_plastering_Required__c}</td>
+            </tr>      
+<tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Floors are leveled out and prepped for material (exceptional cases where material is Italian marble, wooden flooring, etc.)(Basic): </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Floors_are_levelled_out_prepped_Basic__c}</td>
+            </tr>      
+<tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Flooring is completed(Required): </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Flooring_is_completed_Required__c}</td>
+            </tr>      
+<tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Notes: </td>
+                 <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Notes__c}</td>
+            </tr>
+            <tr>
+                <!--    <td style="font-size: 20px;">16)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;PAN No: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.account.PAN__c}</td>              
+            </tr>           
+            <tr>
+                <!--    <td style="font-size: 20px;">17)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;GST No: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.account.GST_No__c}</td>               
+            </tr> 
+            <tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Birthday: </td>
+                <td>
+                    <apex:outputText style="font-family:Calibri;font-size: 16px;height:25px" value="{0,date,dd'-'MM'-'yyyy}">
+                        <apex:param value="{!opp.Birthday__c}" /> 
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Anniversary: </td>
+                <td>
+                    <apex:outputText style="font-family:Calibri;font-size: 16px;height:25px" value="{0,date,dd'-'MM'-'yyyy}">
+                        <apex:param value="{!opp.Anniversary__c}" /> 
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <!--    <td style="font-size: 20px;">17)</td>  -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Wohoo Card #: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:25px">{!opp.Wohoo_Card__c}</td>               
+            </tr>            
+            <tr>
+                <!--    <td style="font-size: 20px;">18)</td>   -->
+                <td style="font-family:Calibri;font-size: 17px;width:300px "> &nbsp;Remarks from Sales: </td>
+                <td style="font-family:Calibri;font-size: 16px;height:50px">{!opp.Remarks_For_Marketing__c}</td>               
+            </tr>
+        </table>
+        <br/>
+     <!--   <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />  -->
+        <tr>
+            <td style="font-family:Calibri;font-size: 18px;"> &nbsp;DC Representative Sign: &nbsp;
+                <apex:outputText style="font-family:Calibri;font-size:17px;" value="{!opp.Owner.name}" > 
+                </apex:outputText>
+            </td> 
+            <td style="font-family:Calibri;font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client Sign:&nbsp;</td>  
+        </tr> 
+        <br/>
+        <tr>
+            <td style="font-family:Calibri;font-size: 15px;"><b>&nbsp;Sales Contact: &nbsp;</b> 
+              <b> <apex:outputText style="font-family:Calibri;font-size:15px;" value="{!opp.Owner.MobilePhone}" > 
+                </apex:outputText>
+              </b>    
+            </td>
+        </tr>
+        <tr>
+            <td style="font-family:Calibri;font-size: 15px;"><b>&nbsp;DesignCafe Website: &nbsp;www.designcafe.com</b>  
+            </td> 
+        </tr>
+        <tr>
+            <td style="font-family:Calibri;font-size: 15px;height: 15px"><b>&nbsp;{!opp.Owner.Street},&nbsp;{!opp.Owner.City},&nbsp;{!opp.Owner.State},&nbsp;{!opp.Owner.Country},&nbsp;{!opp.Owner.PostalCode}.</b></td> 
+       </tr>
+       
+     <!--   <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />  -->
+        <br/>
+        <img src="{!($Resource.BForm2)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="left" />
+        <br/><br/>
+        <table style="width:100%" border="0" cellspacing="0">
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>PRICE PROMISE:</b></td>
+            </tr>
+            <p style="font-family:Calibri;font-size: 17px;">
+                DesignCafe guarantees the prices in this proposal valid till one month from the date of issue of this estimate.
+                Prices may vary when booked beyond this date. Quoted prices are applicable for this proposal only, any modifications
+                may result in a change of prices.
+                <br/><br/>
+                The above Quoted rates are an estimatebased on current design and sizes, they are liable to change till the signoff/production stage
+                depending on the exact actual measurements on site or design changes made by you or as per your instructions.
+                <br/>
+                Deep cleaning for your home post handover can be provided by DC at an extra cost as below:
+                <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2bhk = Rs. 6500 + taxes.<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3bhk = Rs. 8000 + taxes.<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3bhk = @ 6 Rs. per sft on SBA.<br/>
+                Floor Covering of your existing flat will be charged extra at Rs. 8 per sft/ this will be done by default by DC and added
+                to your bill at the time of going to production as per actual site measurements.<br/>
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table> 
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>DELIVERY TIME:</b></td>
+            </tr>       
+            <p style="font-family:Calibri;font-size: 17px;">
+                Your order will be delivered on or before the assured delivery date. Changing an order or unforeseen circumstances 
+                may delay delivery time.<br/>
+                Design Cafe is not responsible for any delay in project implementation due to third party vendors or for reasons
+                beyond its control.<br/>   
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table>     
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>CONFIRMING YOUR ORDER:</b></td>
+            </tr>        
+            <p style="font-family:Calibri;font-size: 17px;">
+                Design Cafe is able to process your final order and start production only post a 55% payment.<br/>
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table>
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>TAXES AND DUTIES:</b></td>
+            </tr>        
+            <p style="font-family:Calibri;font-size: 17px;">
+                All Design Cafe product pricing is exclusive of taxes, taxes have been mentioned in your estimate seperately
+                and will be charged at the time of billing at each stage as per prevalent government tax rates.
+                <br/>
+                <tr>
+                    <td style="font-family:Calibri;font-size: 18px;" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client Sign:&nbsp;</td>
+                </tr>
+                <br/>
+                <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />
+                <br/><br/><br/>
+                <img src="{!($Resource.BForm2)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="left" />
+                <br/><br/>
+                All payments mode via credit cards will be applicable for a 2% surcharge as charged by the banks towards
+                the same. The same as to be borne by the customer.<br/>
+            </p> 
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table>     
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>FINANCIAL SERVICES:</b></td>
+            </tr>   
+            <p style="font-family:Calibri;font-size: 17px;">
+                Design Cafe only facilitates financial loans and services.Approvals, processing and teams
+                are at the sole discretion of the financial entity.<br/>
+            </p>
+         <!--   <tr>
+            <td style="font-family:Calibri;font-size: 18px;" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client Sign:&nbsp;</td>
+            </tr>  
+            <br/><br/>
+            <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />
+            <br/><br/>
+            <img src="{!($Resource.BForm2)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="left" />
+            <br/><br/>  -->
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>CANCELLATION, RETURNS AND DELAYS:</b></td>
+            </tr>    
+            <p style="font-family:Calibri;font-size: 17px;">
+                Any non-manufacturing defects and damages post receiving delivery are not valid for returns or replacements.
+                Customised and made-to-order furniture pieces, purchased from Design Cafe, cannot be returned or exchanged.
+                <br/>
+                All payments made at any stage are Non refundable.<br/>
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table>   
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>PAYMENT STAGES:</b></td>
+            </tr>       
+            <p style="font-family:Calibri;font-size: 17px;">
+                5% to begin design (Non-Refundable)<br/>
+                15% before 3d after first presentation - (Non-Refundable)<br/>
+                35% to move to production -(Non-Refundable)<br/>
+                45% before dispatch -(Non-refundable)<br/>
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table>
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>DESIGN SERVICES:</b></td>
+            </tr>
+            <p style="font-family:Calibri;font-size: 17px;">
+                Professional design services will be provided for a period of 30 to a maximum of 75* days
+                (based on order value and the chart below) from the date of sign-up with DC with a free extension of 
+                15 days in case of delays from our side. After the completion of the extension period, the designer will be available to help
+                with selections, monitoring of the work at site as per DC standards and design advice at no extra cost for the duration
+                of the project and as per the terms and conditions of selection visits based on order value.<br/>
+                <br/>
+                However an additional extension of time for design services above and beyond this period, is available at
+                Rs. 25000 for a period of 21 days.
+                <br/>
+            </p>
+            
+            <table  border="1" width="650" height="800" cellspacing="0">
+                <tr>
+                    <td style="font-family:Calibri;font-size: 17px;"> ORDER VALUE IN RUPEES </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> FREE DESIGN SERVICE RATES </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> SELECTION VISITS INCLUDED# </td>
+                </tr>
+                <tr>
+                    <td style="font-family:Calibri;font-size: 17px;"> 500,000 - 800,000 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 30 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 2 </td>
+                </tr>
+                <tr>
+                    <td style="font-family:Calibri;font-size: 17px;"> 800,000 - 1,000,000 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 40 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 3 </td>
+                </tr>
+                <tr>
+                    <td style="font-family:Calibri;font-size: 17px;"> 1,000,000 - 1,500,000 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 50 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 5 </td>
+                </tr>
+                <tr>
+                    <td style="font-family:Calibri;font-size: 17px;"> 1,500,000 - 2,000,000 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 60 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 7 </td>
+                </tr>
+                <tr>
+                    <td style="font-family:Calibri;font-size: 17px;"> >2,000,000 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 75 </td>
+                    <td style="font-family:Calibri;font-size: 17px;"> 7 </td>
+                </tr>
+            </table>
+           <br/>
+            <tr>
+                <td style="font-family:Calibri;font-size: 18px;" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client Sign:&nbsp;</td>
+            </tr>
+            <br/> 
+            <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />
+            <br/><br/>
+            <img src="{!($Resource.BForm2)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="left" />
+            <br/>
+            
+            <p style="font-family:Calibri;font-size: 17px;">
+                Design services is provided by DC as part of your order with DC and extends only to those rooms installed by DC. However if you require
+                more design hours for your project the design service can be provided at a charge of Rs. 25000 + taxes for 15 days.Design days are counted 
+                cumulatively from the day of payment of commitment advance of 5% till sign-off and includes weekends. You can however choose to pause your 
+                design service by contacting your happiness manager or sending an email to happiness@designcafe.comwith the message "Pause Design Service" 
+                in the subject line. 
+            </p>
+          <!--  <tr>
+            <td style="font-family:Calibri;font-size: 18px;" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client Sign:&nbsp;</td>
+            </tr>
+            <br/><br/> 
+            <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />
+            <br/><br/>
+            <img src="{!($Resource.BForm2)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="left" />
+            <br/><br/>   -->
+            <p style="font-family:Calibri;font-size: 17px;">
+                Design services can be paused for a maximum of 90 days.<br/>
+                <br/>
+                # selection visits: each visit is for a period of 4 hours. Additional visits if required can be provided at Rs. 5000/- per visit + taxes.<br/><br/>
+                High-Quality 3d renders for only Bedrooms, Kitchens and Living rooms which are part of the order with Design Cafe.<br/> 
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table>
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>DELAY IN COMPLETION:</b></td>
+            </tr>
+            <p style ="font-family:Calibri;font-size: 17px;">
+                If the completion of the project is delayed beyond the 90 days we promise Design Cafe will pay the client rent to the extend of Rs. 20,000 per month
+                on a pro rata basis for the delay upto a miximum of 5% of total project value.<br/>
+                The payment should be subject to the following conditions.<br/>
+                The Delay is for the initial scope of work and item list and additional items or request for change will not be considered as delayed items.<br/>
+                There are no external factors which have contributed to delay which are out of control of DC.<br/>
+                The site is in a condition for installation and there is no delay or pending work from the builder or the client.<br/>
+                DC promises to deliver the home in 90 days, which start from the date of final sign off on all drawings and items and payment towards begining of production.<br/>
+            </p>
+            
+            <table border="2" width="600"  HEIGHT="600" cellspacing="0">
+                <br/>
+            </table> 
+            <tr>
+                <td style="font-family:Calibri;font-size: 20px;"><b>COPYRIGHTS:</b></td>
+            </tr> 
+            <p style ="font-family:Calibri;font-size: 17px;">
+                All Designs shared with the client at any stage are the copyright of Design Cafe and GS E-commerce Pvt Ltd. The designs are 
+                shared with the intent that the order for the same is placed with Design Cafe. Any Design shared by Design Cafe cannot be used,
+                installed shared in any way or form without prior and express written consent of Design Cafe.<br/>
+                <br/>
+                Customised design presentations will be shown to the client on a DC system, the same will be available for download or email only
+                after 20% of payment has been made towards the entire order.
+            </p>
+            
+            <p style ="font-family:Calibri;font-size: 18px;">
+                <b>*Placing an order with DC is an acceptance to all above Terms and Conditions.</b> 
+            </p> 
+        </table> 
+        <br/>
+         <tr>
+            <td style="font-family:Calibri;font-size: 18px;" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client Sign:&nbsp;</td>
+         </tr>
+        <br/>
+        <img src="{!($Resource.BForm3)}" style="background-color:#D3D3D3; width: 600px; height: 15px" align="right" />
+    </apex:form>  
+</apex:page>

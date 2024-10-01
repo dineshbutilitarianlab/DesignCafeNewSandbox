@@ -1,0 +1,57 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionwithoutheader" access="global" controller="ReferralPage">
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 80rem !important;
+        max-height: 550;
+        width:80% !important;
+        }
+    </aura:html>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="RefereeName" type="String"/>
+    <aura:attribute name="RefereeNumber" type="String"/>
+    <aura:attribute name="RefereeCode" type="String"/>
+    <aura:attribute name="RefereeEmail" type="String"/>
+    <aura:attribute name="editMode" type="Boolean"/>
+    <aura:handler name = "init" value="{!this}" action="{!c.doInit}"/>
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h4 class="title slds-text-heading--medium">Referral Details</h4>
+    </div>
+    <h3 class="slds-section-title--divider">Referee Information</h3>
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="custom-box">
+                    <lightning:input disabled="{!v.editMode}" value="{!v.RefereeName}" label="Referee Name" aura:id="Referee_Name"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="custom-box">
+                    <lightning:input disabled="{!v.editMode}" value="{!v.RefereeNumber}" label="Referee Number" aura:id="Referee_Number"/>
+                    
+                </div>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+    </div>
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="custom-box">
+                    <lightning:input disabled="{!v.editMode}" value="{!v.RefereeEmail}" label="Referee Email" aura:id="Referee_Email"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="custom-box">
+                    <lightning:input disabled="{!v.editMode}" value="{!v.RefereeCode}" label="Referee Code" aura:id="Referee_Code"/>
+                </div>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+    </div>
+    <div class="slds-align_absolute-center">
+        <lightning:button label="Edit"  title="Edit" onclick="{! c.handleEdit }"/>
+        <lightning:button variant="brand" disabled="{!v.editMode}" label="Save" title="Save" onclick="{! c.handleSave }" />
+        <lightning:button label="Cancel"  title="Cancel" onclick="{! c.handleCancel }"/>
+        
+    </div>
+</aura:component>

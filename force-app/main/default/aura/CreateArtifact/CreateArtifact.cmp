@@ -1,0 +1,42 @@
+<!--
+Developer : Ankit Soni 
+Created Date :  16 Dec 2019
+Description : Lightning Cmp to create Artifact from Milestone record page.     
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" controller="MilestoneController">
+    <aura:attribute name="milestoneRecord" type="Milestone1_Milestone__c"/>    
+    <aura:attribute name="objectRecord" type="Milestone1_Milestone__c"/>
+    <aura:attribute name="comments" type="String" />
+    <aura:attribute name="artifactId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <lightning:workspaceAPI aura:id="workspace"/>
+
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content {
+        overflow-y: hidden !important;
+        height: unset !important;
+        max-height: unset !important;
+        }        
+    </aura:html>
+    
+    
+    <div class="slds-col modal-header slds-modal__header">
+        <h2 class="title slds-text-heading--medium">New Milestone Document</h2>
+    </div>
+    
+    <div class="slds-col modal-body scrollable slds-p-around--medium" style="height: 300px; max-height: 500px; overflow-y: auto !important">
+        <div class="slds-p-around--medium" style="margin:2%;">            
+            <lightning:inputRichText variant="bottom-toolbar" value="{!v.comments}" placeholder="Please enter Comments/Minutes of Meeting here.."/><br/>                       
+        </div>
+    </div>
+    
+    <div class="slds-col modal-footer slds-modal__footer">        
+        <lightning:button variant="brand" label="Save" onclick="{!c.doCreate }" />      
+    </div>
+</aura:component>

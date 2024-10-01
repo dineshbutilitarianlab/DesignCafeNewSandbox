@@ -1,0 +1,108 @@
+<apex:page sidebar="false" showHeader="false" controller="DCPaymentPageController" cache="false">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var key = '';
+        var order_id = '';
+    
+    	function retreiveOrderIdAndKeyFromURL() {
+            try {
+                var att_start = window.parent.location.href.indexOf('?') + 1;
+                var params = window.parent.location.href.substring(att_start);
+                var keys = decodeURIComponent(params).split('&');
+                
+                for(var i=0; i < keys.length; i++) {
+                    var block = keys[i].split('=');
+                    
+                    if(block[0] == 'k') {
+                       	key = decodeURIComponent(block[1]);
+                    }
+                    else if(block[0] == 'o') {
+                        order_id = block[1];
+					}
+                }
+            }
+            catch(e) {
+                console.log(e);
+            }
+        }
+    
+    	function handlePostPaymentRedirection(result, event) {
+            if(result.status_code == '200') {
+                console.log('^^^ handlePostPaymentRedirection SUCCESS!');
+                window.parent.location.href = '/Customer/s/payment-success?k=' + encodeURIComponent(key) + '&o=' + order_id;
+            }
+            else {
+                console.log('^^^ handlePostPaymentRedirection FAILURE. ' + result.status_message);
+                //window.parent.location.href = '/Customer/s/payment-failure?k=' + encodeURIComponent(key) + '&o=' + order_id;
+            }
+        }
+    
+    	function handlePostPaymentProcess(response) {
+            console.log('^^^ error_code=' + response.error_code);
+            
+            if(response.error_code == undefined) {
+                console.log('^^^ payment cycle completed!');
+                console.log('^^^ response.razorpay_payment_id=' + response.razorpay_payment_id);
+                console.log('^^^ response.razorpay_order_id=' + response.razorpay_order_id);
+                console.log('^^^ response.razorpay_signature=' + response.razorpay_signature);
+                
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.DCPaymentPageController.saveTransaction}',
+                    key,
+                    response.razorpay_order_id,
+                    response.razorpay_payment_id,
+                    response.razorpay_signature,
+                    handlePostPaymentRedirection,
+                    {escape: true}
+                );
+            }
+		}
+    
+    	function loadPaymentInfo() {
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.DCPaymentPageController.getPaymentInfo}',
+                key,
+                order_id,
+                loadRazorPayScreen,
+                {escape: true}
+            );
+        }
+    
+    	function loadRazorPayScreen(result, event) {
+            var options = {
+                "key": result.rz_key, 
+                "amount": result.total_amount,
+                "currency": "INR",
+                "name": "Design Cafe",
+                "description": "More Room For Joy",
+                "image": "",
+                "order_id": order_id,
+                "handler": handlePostPaymentProcess,
+                "prefill": {
+                    "name": result.customer_name,
+                    "email": result.customer_email,
+                    "contact": result.customer_phone
+                },
+                "notes": {
+                    "address": ""
+                },
+                "theme": {
+                    "color": "#F37254"
+                }
+            };
+            
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+    
+        window.addEventListener('load', function () {
+            try {
+                retreiveOrderIdAndKeyFromURL();
+                loadPaymentInfo();
+            }
+            catch(e) {
+                console.log(e);
+            }
+        });
+    </script>
+</apex:page>

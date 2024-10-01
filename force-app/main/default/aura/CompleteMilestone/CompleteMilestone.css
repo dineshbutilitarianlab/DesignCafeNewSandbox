@@ -1,0 +1,5 @@
+.THIS.bullets { 
+    list-style-type: square;
+    font-size: 2em;
+    color: darkorange;
+}

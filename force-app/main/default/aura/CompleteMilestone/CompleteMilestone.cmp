@@ -1,0 +1,71 @@
+<aura:component controller="MilestoneController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:attribute name="milestoneRecord" type="Milestone1_Milestone__c"/>
+    <aura:attribute name="milestoneSelected" type="boolean" default="true"/>
+    
+    <aura:attribute name="objectRecord" type="Milestone1_Milestone__c"/>
+    <aura:attribute name="questionList" type="List"/>
+    <aura:attribute name="isMilestoneActionEmpty" type="boolean" default="false"/>
+    <aura:attribute name="milestoneComplete" type="boolean" default="false"/>
+    
+    <force:recordData aura:id="recordHandler"
+                      recordId="{!v.recordId}"
+                      targetRecord="{!v.objectRecord}"
+                      fields = "Type__c,Complete__c"
+                      targetFields="{!v.milestoneRecord}" 
+                      recordUpdated="{!c.getQuestions}"
+                      mode="EDIT"
+                      />
+    
+    <lightning:layout multipleRows="true" horizontalAlign="center">        
+        <aura:if isTrue="{! v.milestoneRecord.Complete__c &amp;&amp; v.milestoneSelected}">
+            <lightning:layoutItem padding="around-small" size="12">
+                <br/> <br/><br/> <br/>
+                <lightning:icon iconName="standard:task" alternativeText="task" />
+                &nbsp;&nbsp; <b class="slds-text-heading_medium"> This Milestone is already complete. No additional action required.  </b>
+            </lightning:layoutItem>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.isMilestoneActionEmpty != true}">
+                    <aura:if isTrue="{!v.questionList}">                    
+                        <lightning:layoutItem padding="around-small" size="12">
+                            <lightning:icon iconName="standard:task" alternativeText="task" />
+                            &nbsp;&nbsp; <b class="slds-text-heading_medium"> Please confirm if these tasks are complete?</b>
+                        </lightning:layoutItem>
+                        <lightning:card>
+                            <div class="slds-scrollable" style="height:7rem;width:100%">
+                                <ol class="slds-list--ordered">
+                                    <aura:iteration var="question" items="{!v.questionList}">            
+                                        <li class="slds-p-top_small">{!question}</li>
+                                    </aura:iteration>  
+                                </ol>
+                            </div>
+                        </lightning:card>
+                    </aura:if>                   
+                    <aura:set attribute="else">                
+                        
+                        <lightning:layoutItem padding="around-small" size="12">
+                            <br/> <br/><br/> <br/>
+                            &nbsp;&nbsp; <b class="slds-text-heading_medium"> Are you sure that you want to complete this milestone? </b>
+                            <br/> <br/><br/> <br/>
+                        </lightning:layoutItem>
+                    </aura:set>            
+                </aura:if>
+            </aura:set>
+        </aura:if>
+        
+    </lightning:layout>        
+    
+    <lightning:layout>        
+        <lightning:layoutItem padding="around-small" size="12">
+            <lightning:card>
+                <aura:set attribute="footer">
+                    <lightning:layoutItem padding="around-small" size="12">
+                        <lightning:button variant="brand" label="Yes, I Confirm" onclick="{!c.markComplete}" disabled="{! v.milestoneRecord.Complete__c &amp;&amp; v.milestoneSelected}"/>            
+                        <lightning:button variant="brand" label="Cancel" onclick="{!c.onCancel}"/>                                    
+                    </lightning:layoutItem>
+                </aura:set>
+            </lightning:card>
+        </lightning:layoutItem>        
+    </lightning:layout>
+    
+</aura:component>

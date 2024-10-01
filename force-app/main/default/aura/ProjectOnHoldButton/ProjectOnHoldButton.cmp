@@ -1,0 +1,14 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId" 
+                access="global" controller="ProjectOnHoldButtonController">
+
+    <div>
+        <lightning:layout multipleRows="false" horizontalAlign="center">        
+            <lightning:layoutItem padding="around-small" size="12">
+                &nbsp;&nbsp; <b class="slds-text-heading_medium">Please confirm if you want to put this project on hold.</b>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <div class="slds-float--right">
+            <lightning:button variant="brand" label="Yes, I Confirm" onclick="{!c.putProjectOnHold}" />      
+        </div>
+    </div>
+</aura:component>

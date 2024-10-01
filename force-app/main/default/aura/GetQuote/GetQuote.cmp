@@ -1,0 +1,21 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global"
+                controller="Getquotelcs">
+    <aura:attribute name="recordId" type= "String"/>
+    <aura:attribute name="ShowButton" type= "Boolean"/>
+    <aura:attribute name="Isdisabled" type= "Boolean"/>
+    <aura:handler name="init" value="{!this}" action ="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}" />
+    <aura:if isTrue = "{!v.ShowButton}">
+        <lightning:card>
+            <div class="slds-align_absolute-center">
+                <div><b>Only for Sales Users</b></div>
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning:button variant="brand" label="GetQuote" disabled = "{!v.Isdisabled}"  title="GetQuote" onclick="{! c.getQuote }" />
+            </div>
+        </lightning:card>
+    </aura:if> 
+</aura:component>

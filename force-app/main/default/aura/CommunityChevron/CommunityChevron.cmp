@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <div>
+        <lightning:path aura:id="path" recordId="{!v.recordId}" variant="non-linear" hideUpdateButton="true" onselect="{!c.myAction}" />
+    </div>
+</aura:component>

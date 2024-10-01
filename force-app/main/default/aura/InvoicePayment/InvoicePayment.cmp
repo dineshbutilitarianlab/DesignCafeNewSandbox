@@ -1,0 +1,105 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionwithoutHeader" access="global" controller= "ManualPaymentHandler_GraphQL" >
+    <aura:html tag="style">
+        .slds-modal__container{
+        height : auto;
+        width: auto;
+        max-width: 50rem;
+        }
+        .modal-body{
+        height : 500px !important;
+        max-height: 500px !important;
+        }
+        .customFooter{
+        display: inline !important;
+        }
+    </aura:html> 
+    
+    <lightning:quickActionAPI aura:id="quickActionAPI"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="invoiceId" type="String"/>
+    <aura:attribute name="Isdisabled" type= "Boolean"/>
+    <aura:attribute name="latestQuoteId" type= "String"/>
+    <aura:attribute name="siteServicesAmountInclGST" type="Integer"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+     <aura:attribute name="SiteServicedisabled" type= "Boolean" default="false"/>
+    <aura:attribute access="public" name="multiple" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="accept" type="List" default="['.jpg', '.jpeg', '.docx', '.pdf', '.ppt', '.pptx', '.xls', '.xlsx', '.gif','.png', '.csv']"/>
+    <aura:attribute access="public" name="disabled" type="Boolean" default="false"/>
+    <aura:attribute access="public" name="sObjectAttachedFiles" type="List" default="[]"/>
+     <aura:attribute name="fields" type="String[]" default="['paymentID__c']" />
+    <aura:attribute name="IsRequestPaymentAvailable" type= "Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <aura:if isTrue="{!v.IsRequestPaymentAvailable}">
+        <!-- Quote Dropdown - Start -->
+            <c:childQuote recId="{!v.recordId}" onvaluechange="{!c.getValueFromLwc}"></c:childQuote>
+        <!-- Quote Dropdown - End -->
+    
+        <header slot="title" class="slds-page-header slds-page-header_record-home slds-align_absolute-center">
+            <b>Invoice Payment </b>
+        </header><br/> 
+       
+        
+        <!--Invoice Payment Create Record Form-->
+        <lightning:recordEditForm  objectApiName= "Invoice_Payment__c" aura:id="myform"  onsuccess="{!c.handleSubmit}" >
+        <lightning:messages />
+        <lightning:inputField fieldName="Name" />
+        <lightning:inputField fieldName="Opportunity_Name__c"  aura:id="Opportunity_Name" value="{!v.recordId}"/>
+        <lightning:inputField fieldName="RP_Recipt_ID__c" />
+        <lightning:inputField fieldName="paymentID__c" readonly="true"/>
+ 		<lightning:inputField fieldName="Mode_of_Receipt__c" />
+        <lightning:inputField fieldName="Date_of_Payment__c" />
+        <lightning:inputField fieldName="Payment_Receipt_Url__c" readonly="true"/>
+        <lightning:inputField fieldName="Modular_value__c" min="20000" message-when-range-underflow="Amount should not be less than 20000"/>
+        <lightning:inputField fieldName="Site_Service_value__c" readonly="{!v.SiteServicedisabled}" />
+        <lightning:inputField fieldName="Qarpentri_Payment_Amount__c" />   
+        <lightning:inputField fieldName="Quote_Id__c"  style="visibility: hidden;" value="{!v.latestQuoteId}" />
+        
+        
+        <!--File Uploader-->
+        <!-- Lightning Input with file type and on file change call the 'handleFilesChange' controller --> 
+        <!--
+  		<div class="modal-header slds-modal__header slds-size_1-of-1">
+         <h4 class= "slds-text-heading_medium">Upload Supporting Documents</h4>
+        </div> 
+        
+       	<lightning:fileUpload name="fileUploader"
+                          multiple="{!v.multiple}"
+                          accept="{!v.accept}"
+                          disabled="{!v.disabled}"
+                          recordId="{!v.recordId}"
+                          onuploadfinished="{!c.handleUploadFinished}"/>
+        -->
+        <!-- Responsive Layout to show File Cards on the Modal -->
+        <!--
+        <lightning:layout multipleRows="true">
+            <aura:iteration items="{!v.sObjectAttachedFiles}" var="file">
+            <lightning:layoutItem padding="around-small">
+            -->    
+                   <!--Attahcment Remove Button-->
+        	<!--
+            <div class="slds-clearfix">
+            <div class="slds-float_right">
+            <lightning:buttonIcon iconName="utility:close" variant="border-bare" size="small" onclick="{!c.deleteAttachments}" alternativeText="Remove Attachment" value="{!file.Id}"/>
+            </div>
+            </div>
+                    
+            <lightning:fileCard fileId="{!file.Id}" description="{!file.Title}"/>
+            </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+        -->
+        
+        <div class="slds-align_absolute-center">
+            <lightning:button class="slds-m-top_small" variant="brand" disabled = "{!v.Isdisabled}" type="submit" label="Save"/>
+            <lightning:button class="slds-m-top_small" type="oncancel" label="Cancel" onclick="{!c.handleCancel}"/>  
+        </div>
+    </lightning:recordEditForm> 
+    <aura:set attribute="else">
+        <div class="slds-m-top_small slds-box slds-text-heading_medium slds-text-align_center">Request payment record is not created!</div>
+    </aura:set>
+  </aura:if> 
+      
+</aura:component>

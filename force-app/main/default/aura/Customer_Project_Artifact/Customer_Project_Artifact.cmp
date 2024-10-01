@@ -1,0 +1,43 @@
+<!--
+Developer : Ranveer Singh
+Description : Lightning Cmp to collect coustomer feedback.     
+-->
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" controller="CustomerProjectArtifactController">
+    
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content {
+        overflow-y: hidden !important;
+        height: unset !important;
+        max-height: unset !important;
+        }        
+    </aura:html>
+    
+    <aura:attribute name="comments" type="String" />
+    <aura:attribute name="Project_ArtifactRecord" type="Object"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Project_Milestone__c"
+                      targetFields="{!v.Project_ArtifactRecord}"
+                      />
+    <div class="slds-col modal-header slds-modal__header">
+        <h2 class="title slds-text-heading--medium">Feedback</h2>
+    </div>
+    <div class="slds-col modal-body scrollable slds-p-around--medium" style="height: 300px; max-height: 500px; overflow-y: auto !important">
+        <div class="slds-p-around--medium" style="margin:2%;">            
+            <lightning:inputRichText variant="bottom-toolbar" value="{!v.comments}" placeholder="Please type here your comments.."/><br/>
+        </div>
+    </div>
+    <div class="slds-col modal-footer slds-modal__footer">        
+        <lightning:button variant="brand" label="Accept" onclick="{!c.doAccept }" />      
+        <lightning:button variant="destructive" label="Reject" onclick="{!c.doReject }" />
+    </div>
+    
+</aura:component>

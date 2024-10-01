@@ -1,0 +1,94 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId"
+                access="global" 
+                controller="SiteConditionUX">
+    
+    <aura:attribute name="OpportunityRecord" type="object"/>
+    <aura:attribute name="FramesofExtDoorsWin" type="Boolean"/>
+    <aura:attribute name="AllWallCompleted" type="Boolean"/>  
+    <aura:attribute name="Floorsleveledout" type="Boolean"/>
+    <aura:attribute name="Doorwindowinstall" type="Boolean"/>
+    <aura:attribute name="puttyonecoat" type="Boolean"/> 
+    <aura:attribute name="Flooringcompleted" type="Boolean"/> 
+    <aura:attribute name="requiredtoc" type="String"/>
+    <aura:attribute name="Notes" type="String"/>
+    
+    <aura:attribute name="disablevalues" type="Boolean" default ="true"/>
+    
+    <aura:attribute name="op" type="Opportunity" default="{'sobjectType':'Opportunity', 
+                                                          'Frames_for_all_external_Doors_Windows__c': '',
+                                                          'All_walls_are_completed_Required__c': '',
+                                                          'Floors_are_levelled_out_prepped_Basic__c': '',
+                                                          'The_Doors_Windows_are_installed_Requir__c': '',
+                                                          'Putty_and_1_coat_of_plastering_Required__c': '',
+                                                          'Flooring_is_completed_Required__c': '',
+                                                          'If_the_required_part_is_checked_the_co__c': '',
+                                                          'Notes__c': ''}"/>
+    
+    <aura:handler name="init"  value="{!this}"  action="{!c.doInit}"/>
+    
+    <br/>
+    
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="form-group">
+                    <lightning:input type="checkbox" onChange="{!c.onChange1}" label="Basic-Frames of external Doors and Windows" checked="{!v.FramesofExtDoorsWin}" disabled="{!v.disablevalues}"/>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="form-group">
+                    <lightning:input type="checkbox" onChange="{!c.onChange4}" label="Reqd-Doors and Windows installed" checked="{!v.Doorwindowinstall}" disabled="{!v.disablevalues}"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+    
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="form-group">
+                    <lightning:input type="checkbox" onChange="{!c.onChange2}" label="Basic-All walls completed" checked="{!v.AllWallCompleted}" disabled="{!v.disablevalues}"/>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="form-group">
+                    <lightning:input type="checkbox" onChange="{!c.onChange5}" label="Reqd-Putty/1 coat of plastering on walls" checked="{!v.puttyonecoat}" disabled="{!v.disablevalues}"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+    
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="form-group">
+                    <lightning:input type="checkbox" onChange="{!c.onChange3}" label="Basic-Floors leveled out and prepped" checked="{!v.Floorsleveledout}" disabled="{!v.disablevalues}"/>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="6" padding="around-small">
+                <div class="form-group">
+                    <lightning:input type="checkbox" onChange="{!c.onChange6}" label="Reqd-Flooring is completed" checked="{!v.Flooringcompleted}" disabled="{!v.disablevalues}"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+    <div> *Basic is auto checked if req is checked </div>
+  <!--  <div class="form-group">   
+        <lightning:input onChange="{!c.onChange7}" type="text" maxlength="255" label="*Basic is auto checked if req is checked" value="{!v.requiredtoc}" disabled="{!v.disablevalues}"/>
+    </div>  -->
+    <br/>
+    <div class="form-group"> 
+        <lightning:input onChange="{!c.onChange8}" type="text" maxlength="255" label="Notes" value="{!v.Notes}" disabled="{!v.disablevalues}"/>   
+    </div>
+    
+    <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning:button label="Edit"  title="Edit" onclick="{! c.handleEdit }"/>
+        <lightning:button variant="brand" label="Submit" title="Brand action" onclick="{!c.UpdateOpportunity}" disabled="{!v.disablevalues}" />
+    </div>
+</aura:component>

@@ -1,0 +1,323 @@
+<!--
+Developer : Azar Khasim.
+Company  : SiraTek.
+Created Date : 03 MAR 2020
+Description : Global Duplicate Search. 
+-->
+
+<apex:page StandardController="Lead" recordSetVar="leads" extensions="GlobalDupSearch1">
+    
+    <apex:form >
+        <apex:pageBlock id="block">
+            <apex:pageMessages ></apex:pageMessages>
+            <style>
+                .custom1 .pbSubheader {
+                background-color: #2E9AFE !important;
+                }
+            </style> 
+            <br/><br/>
+            
+            
+            
+            <!--     <apex:outputPanel layout="block" styleClass="custom1">
+<apex:pageBlockSection title="Find Duplicate" collapsible="false">     
+<center>
+
+<apex:commandButton style="width:50px;height:20px" action="{!refresh}" value="Refresh"  />
+
+</center> 
+<center>
+<apex:inputText value="{!pe}" id="search" html-placeholder="Search here"/><br/>
+<apex:commandButton style="width:50px;height:20px" value="Search" action="{!search}" rerender="block"/>
+</center>             
+<center>
+<apex:commandButton style="width:75px;height:25px"  action="{!createLead}" value="Create Lead" rendered="{!Createlead=true}"/>
+</center>
+</apex:pageBlockSection>
+</apex:outputPanel> -->
+            
+            <!---------- Duplicate Search ------------------------------------------------------------------------------------------------------------------------>
+            <apex:pageBlockButtons location="top">
+                <h1>
+                    <left> Find Duplicate : Please Enter 10 Digit Mobile Number or a valid Email Address </left>
+                </h1> <br/> <br/>
+                
+                <!--    <apex:commandButton style="width:50px;height:20px" action="{!refresh}" value="Refresh"  />   -->
+                <apex:inputText value="{!pe}" id="search" html-placeholder="Search here"/> &nbsp;
+                <apex:commandButton style="width:50px;height:20px" value="Search" action="{!search}" rerender="block"/> <br/> <br/>
+                <apex:commandButton style="width:75px;height:25px"  action="{!createLead}" value="Create Lead" rendered="{!Createlead=true}"/>
+              <apex:commandButton style="width:75px;height:25px"  action="{!createLead1}" value="Create Lead" rendered="{!Createlead1=true}"/>
+                
+            </apex:pageBlockButtons>
+            
+            
+            
+            <!------------------------------------------------------------ Lead Data(No Converted and Prospect Data)  to Display ------------------------------------------------------------------------>   
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection title="Lead" rendered="{!ld1 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist}" var="Leaddata" cellspacing="10">
+                        
+                        <apex:column value="{!Leaddata.Name}" headerValue="Lead Name"/> 
+                        <apex:column value="{!Leaddata.Status}" headerValue="Lead Stage"/>
+                        <apex:column value="{!Leaddata.DC_Lead_Status__c}" headerValue="Lead Status"/>
+                        <apex:column value="{!Leaddata.Call_Stage__c}" headerValue="Call Stage"/>
+                        
+                        
+                        
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                        <!--          <apex:column >
+<apex:facet name="header">New Lead Owner</apex:facet>
+<apex:inputField value="{!Leaddata.ownerId}" required="false" rendered="{!IF((Leaddata.Lead_Owner_Role__c ='Internal Sales Agent'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Lead'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/>
+</apex:column>  -->
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel> 
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection rendered="{!ld1 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist}" var="Leaddata" cellspacing="10">
+                        
+                        <apex:column value="{!Leaddata.Follow_Up_Date_Time__c}" headerValue="Follow Up Date/Time"/>   
+                        <apex:column value="{!Leaddata.Meeting_Venue__c}" headerValue="Meeting Venue"/>
+                        <apex:column value="{!Leaddata.CreatedDate}" headerValue="Created Date"/>    
+                        <apex:column headerValue="Change Ownership" rendered="{!If(($Profile.Name =='Call Center Agent' || $Profile.Name =='Call Center Team Lead' || $Profile.Name =='JPDC Sales Executive' || $Profile.Name =='Hofeto'  || $Profile.Name =='DC Offline Marketing Head'|| $Profile.Name =='DC Online Marketing Head'|| $Profile.Name =='DC Organic and Website Marketing Head' || $Profile.Name =='CMM' || $Profile.Name =='CMM Executive'),false,true)}" >
+                            <apex:inputCheckbox value="{!Leaddata.DUP_Update_Owner__c}"  label="Change Ownership" rendered="{!If((Leaddata.Lead_Owner_Role__c ='Internal Sales Agent'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Lead'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/> 
+                        </apex:column> 
+                        
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                        <!--          <apex:column >
+<apex:facet name="header">New Lead Owner</apex:facet>
+<apex:inputField value="{!Leaddata.ownerId}" required="false" rendered="{!IF((Leaddata.Lead_Owner_Role__c ='Internal Sales Agent'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Lead'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/>
+</apex:column>  -->
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>             
+            
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                
+                <apex:pageBlockSection rendered="{!ld1 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist}" var="Leaddata" cellspacing="10">
+                        
+                        <apex:column value="{!Leaddata.Owner.Name}" headerValue="Owner Name"/>
+                        <apex:column value="{!Leaddata.User_Mobile__c}" headerValue="Owner Mobile"/>
+                        <apex:column value="{!Leaddata.Owner.Email}" headerValue="Owner Email"/>
+                        
+                        <apex:column value="{!Leaddata.Lead_Owner_Role__c}" headerValue="Owner Role"/>
+                        
+                        
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                        <!--          <apex:column >
+<apex:facet name="header">New Lead Owner</apex:facet>
+<apex:inputField value="{!Leaddata.ownerId}" required="false" rendered="{!IF((Leaddata.Lead_Owner_Role__c ='Internal Sales Agent'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Lead'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/>
+</apex:column>  -->
+                        
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>     
+            
+            
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection rendered="{!ld1 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist}" var="Leaddata" cellspacing="10">
+                        
+                        <apex:column value="{!Leaddata.Channel__c}" headerValue="Channel"/>
+                        <apex:column value="{!Leaddata.Source__c}" headerValue="Source"/>
+                        <apex:column value="{!Leaddata.DC_Campaign_Source__c}" headerValue="Campaign Source"/>
+                        <apex:column value="{!Leaddata.DC_Lead_Source__c}" headerValue="Lead Source"/>
+                        
+                        
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                        <!--          <apex:column >
+<apex:facet name="header">New Lead Owner</apex:facet>
+<apex:inputField value="{!Leaddata.ownerId}" required="false" rendered="{!IF((Leaddata.Lead_Owner_Role__c ='Internal Sales Agent'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Lead'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/>
+</apex:column>  -->
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>                   
+            
+            
+   
+            
+            
+            
+            <!------------------------------------------------------------ Lead 2 Data(No New, Assigned, Followup and Junk Data)  to Display ------------------------------------------------------------------------>   
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection title="Lead" rendered="{!ld2 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist1}" var="lds" cellspacing="10">
+                        
+                        <apex:column value="{!lds.Name}" headerValue="Lead Name"/>
+                        <apex:column value="{!lds.Status}" headerValue="Lead Stage"/>
+                        <apex:column value="{!lds.DC_Lead_Status__c}" headerValue="Lead Status"/>
+                        <apex:column value="{!lds.Call_Stage__c}" headerValue="Call Stage"/>
+                        
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                    </apex:pageBlockTable>
+                    
+                </apex:pageBlockSection>
+                
+            </apex:outputPanel> 
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection rendered="{!ld2 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist1}" var="lds" cellspacing="10">
+                        
+                        <apex:column value="{!lds.Follow_Up_Date_Time__c}" headerValue="Follow Up Date/Time"/>
+                        <apex:column value="{!lds.Meeting_Venue__c}" headerValue="Meeting Venue"/>
+                        <apex:column value="{!lds.CreatedDate}" headerValue="Created Date"/>
+                          <apex:column headerValue="Change Ownership" rendered="{!If(($Profile.Name =='Call Center Agent' || $Profile.Name =='Call Center Team Lead' || $Profile.Name =='JPDC Sales Executive' || $Profile.Name =='Hofeto'  || $Profile.Name =='DC Offline Marketing Head'|| $Profile.Name =='DC Online Marketing Head'|| $Profile.Name =='DC Organic and Website Marketing Head' || $Profile.Name =='CMM' || $Profile.Name =='CMM Executive'),false,true)}" >
+                            <apex:inputCheckbox value="{!lds.DUP_Update_Owner__c}"  label="Change Ownership" rendered="{!If((lds.Lead_Owner_Role__c ='Internal Sales Agent'||lds.Lead_Owner_Role__c ='Internal Sales Team Lead'||lds.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/> 
+                        </apex:column>                         
+                    
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                    </apex:pageBlockTable>
+                    
+                </apex:pageBlockSection>
+                
+            </apex:outputPanel>             
+            
+              <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection rendered="{!ld2 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:255%" value="{!ldlist1}" var="lds" cellspacing="10">
+                        
+                        <apex:column value="{!lds.Owner.Name}" headerValue="Owner Name"/>
+                        <apex:column value="{!lds.User_Mobile__c}" headerValue="Owner Mobile"/>
+                        <apex:column value="{!lds.Owner.Email}" headerValue="Owner Email"/>
+                        <apex:column value="{!lds.Lead_Owner_Role__c}" headerValue="Owner Role"/>                      
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                    </apex:pageBlockTable>
+                    
+                </apex:pageBlockSection>
+                
+            </apex:outputPanel>  
+            
+            
+              <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection rendered="{!ld2 != false}" >
+                    
+                    <!-- Regarding the Boolean Value in Lead Object ---------------------------------------->       
+                    <apex:pageBlockTable style="width:260%" value="{!ldlist1}" var="lds" cellspacing="10">
+                        
+                        <apex:column value="{!lds.Channel__c}" headerValue="Channel"/>
+                        <apex:column value="{!lds.Source__c}" headerValue="Source"/>
+                        <apex:column value="{!lds.DC_Campaign_Source__c}" headerValue="Campaign Source"/>
+                        <apex:column value="{!lds.DC_Lead_Source__c}" headerValue="Lead Source"/>
+                        
+                        
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                        <!--          <apex:column >
+<apex:facet name="header">New Lead Owner</apex:facet>
+<apex:inputField value="{!Leaddata.ownerId}" required="false" rendered="{!IF((Leaddata.Lead_Owner_Role__c ='Internal Sales Agent'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Lead'||Leaddata.Lead_Owner_Role__c ='Internal Sales Team Director'),false,true)}"/>
+</apex:column>  -->
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>                
+            
+            
+            
+            
+            
+            
+            
+            
+            <!------------------------------------------------------- Opportunity Data  to Display ---------------------------------------------------------------------------->             
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection title="Opportunity" rendered="{!opp1 != false}">
+                    
+                    <!--- Values to display in Opportunity Object---------------------------------------->
+                    <apex:pageBlockTable style="width:200%" value="{!opplist}" var="opp"  cellspacing="10">
+                        
+                        <apex:column style="width:100px" value="{!opp.name}" />  
+                        <apex:column style="width:100px" value="{!opp.StageName}" headerValue="Opportunity Stage"/>
+                        <apex:column style="width:100px" value="{!opp.owner.Name}" headerValue="Owner"/>  
+                        <apex:column style="width:100px" value="{!opp.owner.UserRoleId}" headerValue="Owner Role"/>
+                        <apex:column style="width:100px" value="{!opp.owner.MobilePhone}" headerValue="Owner Mobile"/>
+                        <apex:column style="width:100px" value="{!opp.owner.Email}" headerValue="Owner Email"/>   
+                        <!----- OwnerId Field in Lead Object ----------------------------------------------->      
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <!---------------------------------------------------------- Account Data  to Display ---------------------------------------------------------------------->             
+            <!--     
+<apex:outputPanel layout="block" styleClass="custom1">
+<apex:pageBlockSection title="Account" rendered="{!ac1 != false}">  -->
+            
+            <!--- Values to display in Account Object---------------------------------------->
+            <!--     <apex:pageBlockTable style="width:150%" value="{!aclist}" var="ac"  cellspacing="10">
+
+<apex:column style="width:100px" value="{!ac.Name}" />  
+<apex:column style="width:100px" value="{!ac.owner.Name}" headerValue="Owner"/>
+<apex:column style="width:100px" value="{!ac.owner.UserRoleId}" headerValue="Owner Role" />
+<apex:column style="width:100px" value="{!ac.owner.MobilePhone}" headerValue="Owner Mobile"/>
+<apex:column style="width:100px" value="{!ac.owner.Email}" headerValue="Owner Email"/>   
+
+
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+</apex:outputPanel>  -->
+            
+            <!------------------------------------------------------------- Contact Data  to Display --------------------------------------------------------------------->             
+            
+            <apex:outputPanel layout="block" styleClass="custom1">
+                <apex:pageBlockSection title="Account / Contact" rendered="{!cn1 != false}">
+                    
+                    <!---  Values to display in Contact Object-------------------------------------------->
+                    <apex:pageBlockTable style="width:240%" value="{!cnlist}" var="con"  cellspacing="10">
+                        
+                        
+                        <apex:column style="width:100px" value="{!con.Name}" />  
+                        <apex:column style="width:100px" value="{!con.owner.Name}" headerValue="Owner"/>  
+                        <apex:column style="width:100px" value="{!con.owner.UserRoleId}" headerValue="Owner Role"/>
+                        <apex:column style="width:100px" value="{!con.owner.MobilePhone}" headerValue="Owner Mobile"/>
+                        <apex:column style="width:100px" value="{!con.owner.Email}" headerValue="Owner Email"/> 
+                        
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel> 
+            
+            <apex:pageBlockSection >
+                <div style="margin-left: 0px;"> 
+                    <apex:pageBlockSectionItem >
+                        <!-- <apex:pageBlockButtons location="bottom" > -->
+                        <apex:commandButton style="color:black;background-image:none;width:50px;height:20px" action="{!save}" value="Save" rendered="{!Editlead=true}"/>
+                        
+                        <!--  </apex:pageBlockButtons> -->
+                    </apex:pageBlockSectionItem> </div>
+            </apex:pageBlockSection> 
+            
+            
+            <!-------- End of logics ------------------------------------------------------------------------------->     
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

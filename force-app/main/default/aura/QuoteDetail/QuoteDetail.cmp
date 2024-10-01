@@ -1,0 +1,9 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction">
+    <aura:attribute name="recordType" type="String" default=""/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <lightning:card title="Quote Details">
+                <lightning:recordForm recordTypeId="{! v.recordType}" objectApiName="Quote"
+                                      layoutType="Full" columns="2" mode="edit" onsuccess="{!c.handleSuccess}"
+                                      onerror = "{!c.handleError}" oncancel="{!c.handleCancel}" />
+    </lightning:card>
+</aura:component>

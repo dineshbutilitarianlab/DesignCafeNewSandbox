@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="GenerateInvoicenewflow_GraphQL">
+    <aura:attribute name="recordId" type= "String"/>
+    <aura:attribute name="errMsg" type= "String"/>
+    <aura:attribute name="invoiceVal" type= "Integer"/>
+    <aura:attribute name="ShowButton" type= "Boolean"/>
+    <aura:attribute name="HideButton" type= "Boolean"/>
+    <aura:attribute name="Isdisabled" type= "Boolean"/>
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action ="{!c.Confirmation}"/>
+    <!--Declare Handlers-->
+    <aura:handler event="aura:waiting" action="{!c.handleShowSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.handleHideSpinner}"/>
+    <aura:if isTrue = "{!v.ShowButton}">
+        
+        <ui:message title="Confirmation" severity="confirm" closable="true">
+			<p><lightning:formattedText value="Invoices once raised cannot be edited. Ensure you have checked: -" /></p>
+            <p><lightning:formattedText value="(1) Customer Details and Addresses" /></p>
+        	<p><lightning:formattedText value="(2) Quotation Values" /></p>
+        	<p><lightning:formattedText value="(3) PAN and GST numbers" /></p>
+	    </ui:message>
+        <lightning:button variant="brand" label="{!v.isSpinner == true ? 'Generating New Invoice...' : 'Generate New Invoice'}" disabled = "{!v.Isdisabled}" title="Generate New Invoice" onclick="{! c.generateNewInvoiceCall }" />
+    </aura:if>
+    <aura:if isTrue = "{!v.HideButton}">
+    <ui:message title="Error" severity="error">
+			<p><lightning:formattedText value="{!v.errMsg}" /></p>
+	</ui:message>
+    </aura:if>
+    
+</aura:component>

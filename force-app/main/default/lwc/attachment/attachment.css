@@ -1,0 +1,7 @@
+.my-card{
+    --sds-c-modal-color-border:rgb(201, 68, 90);
+    --sds-c-modal-header-color-background:rgb(59, 165, 165);
+    --sds-c-modal-header-text-color:White;
+   width: 70%;
+  
+}

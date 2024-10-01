@@ -1,0 +1,80 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="PaymentPreviewCardController">
+    <aura:attribute name="key" type="String" access="private" />
+    <aura:attribute name="paymentInfo" type="Object" access="private" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div>
+        <lightning:card variant="Narrow" footer=""
+                        title="{!v.paymentInfo.mIsAlreadyPaid == true ? 'Payment Already Complete' : 'Payment Information'}" 
+                        iconName="{!v.paymentInfo.mIsAlreadyPaid == true ? 'action:approval' : 'action:check'}">
+            <p class="slds-p-horizontal_small" style='margin-left: 2%;'>
+                <lightning:formattedText value="{!v.paymentInfo.mIsAlreadyPaid == true ? $Label.c.Payment_Complete_Title_on_Community : $Label.c.Payment_Due_Message_on_Community}" />
+            </p>
+            <h3>
+                <div style="margin-left:25px;font-size:12px;">
+                   <!--
+                        <table style='width:98%;'>
+                        	<tr>
+                                <td width='10%' style='font-size:14px;'> <lightning:tile label="{!v.paymentInfo.mCustomerName}" href=""></lightning:tile></td>
+                                <td width='40%'>&nbsp;</td>
+                                <td width='30%'>Amount:</td>
+                                <td style='text-align:right;padding-right: 2%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mOrderAmount}" maximum-fraction-digits="2"></lightning:formattedNumber></td>
+                            </tr>
+                            <tr>
+                                <td>Email : </td>
+                                <td><lightning:formattedText linkify="true" value="{!v.paymentInfo.mCustomerEmail}" /></td>
+                                <td>CGST:</td>
+                                <td style='text-align:right;padding-right: 2%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mCST}" maximum-fraction-digits="2"></lightning:formattedNumber></td>
+                            </tr>
+                            <tr>
+                                <td>Ph : </td>
+                                <td><lightning:formattedText value="{!v.paymentInfo.mCustomerPhone}" /></td>                                
+                                <td>SGST: </td>
+                                <td style='text-align:right;padding-right: 2%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mGST}" maximum-fraction-digits="2"></lightning:formattedNumber></td>
+                                
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            	<td><lightning:formattedText value="{!v.paymentInfo.mIsAlreadyPaid == true ? 'Payment already made:' : 'Total Due for Payment:'}" /></td>
+                                <td style='text-align:right;padding-right: 2%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mTotalAmount}" maximum-fraction-digits="2"></lightning:formattedNumber></td>
+                            </tr>
+                        </table>                        
+                    -->
+                    
+                    	<div style='width:98%;'>
+                            <div style='display:inline-flex;width:100%;'>
+                                <div style='font-size:14px;width:40%;word-wrap: break-word;'> <lightning:tile label="{!v.paymentInfo.mCustomerName}" href=""></lightning:tile></div>
+                                <div style='width:15%;'>&nbsp;</div>
+                                <div style='width:30%;'>Amount:</div>
+                                <div style='text-align:right;width:15%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mOrderAmount}" maximum-fraction-digits="2"></lightning:formattedNumber></div>
+                            </div>
+                            <div style='display:inline-flex;width:100%;'>
+                                <div style='font-size:14px;width:15%;'>Email : </div>
+                                <div style='width:40%;word-wrap: break-word;'><lightning:formattedText linkify="true" value="{!v.paymentInfo.mCustomerEmail}" /></div>
+                                <div style='width:30%;'>CGST:</div>
+                                <div style='text-align:right;width:15%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mCST}" maximum-fraction-digits="2"></lightning:formattedNumber></div>
+                            </div>
+                            <div style='display:inline-flex;width:100%;'>
+                                <div style='font-size:14px;width:15%;word'>Ph : </div>
+                                <div style='width:40%;'><lightning:formattedText linkify="true" value="{!v.paymentInfo.mCustomerPhone}" /></div>
+                                <div style='width:30%;'>SGST:</div>
+                                <div style='text-align:right;width:15%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mGST}" maximum-fraction-digits="2"></lightning:formattedNumber></div>
+                            </div>
+                            <div style='display:inline-flex;width:100%;'>
+                                <div style='font-size:14px;width:15%;word'>&nbsp;</div>
+                                <div style='width:40%;'>&nbsp;</div>
+                                <div style='width:30%;'><lightning:formattedText value="{!v.paymentInfo.mIsAlreadyPaid == true ? 'Payment already made:' : 'Total Due for Payment:'}" /></div>
+                                <div style='text-align:right;width:15%;'>₹<lightning:formattedNumber value="{!v.paymentInfo.mTotalAmount}" maximum-fraction-digits="2"></lightning:formattedNumber></div>
+                            </div>
+                    	</div>
+                </div>
+            </h3>
+        </lightning:card>
+    </div>
+    <div style="margin-top:10px;float:right;">
+        <lightning:button variant="brand" label="Pay" title="Pay" onclick="{!c.handleNextClick}" class="{!v.paymentInfo.mIsAlreadyPaid == true ? 'slds-hide' : ''}" />
+    </div>
+    <div aura:id="spinnerDiv" class="spinnerDiv slds-hide">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </div>
+</aura:component>

@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="getLeadAttachment_GraphQL" >
+    <aura:attribute name = "recordId" type="String"/>
+    <aura:attribute name = "ShowButton" type="Boolean" default="true"/>
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    <aura:attribute name="Isdisabled" type= "Boolean"/>
+    <!--Declare Handlers-->
+    <aura:handler event="aura:waiting" action="{!c.handleShowSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.handleHideSpinner}"/>
+    <aura:if isTrue="{!v.ShowButton}">  
+        <lightning:card>
+            <div class="slds-align_absolute-center">
+                <lightning:button variant="brand" label="{!v.isSpinner == true ? 'Getting Atachments...' : 'Get Attachments'}" disabled = "{!v.Isdisabled}" title="Lead Attachments" onclick="{!c.handleClick}"/>
+            </div>
+        </lightning:card>
+    </aura:if> 
+</aura:component>

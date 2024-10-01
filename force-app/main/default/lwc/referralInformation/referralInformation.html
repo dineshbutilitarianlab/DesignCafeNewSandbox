@@ -1,0 +1,50 @@
+<template>
+    <lightning-card  variant="Narrow" >
+        <div class="slds-text-align_center slds-text-heading_medium">Referral Information</div>
+        <div class="slds-border_top slds-border_bottom slds-grid slds-wrap slds-p-horizontal_small slds-m-top_medium slds-m-bottom_xx-large slds-p-bottom_x-medium">
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input type="text" label="Referral Code"  value={refereeCode} onblur={handleRefereeCode} placeholder="Enter Referral Code..." ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input type="text" label="Referral Mobile Number"  value={refereeNumber} onblur={handleRefereeNumber} placeholder="Enter Referral Number..." ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium lgc-bg slds-m-top_medium">
+                <lightning-button variant="brand" label="Search" title="Search" onclick={handleSearch} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-p-horizontal_small slds-m-top_medium slds-m-bottom_x-large" if:false={isReadOnly}>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input type="text" label="Referral Name" name="Name" value={refereeDetails.Name} onchange={handleInputChange} required ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input type="phone" label="Referral Number" name="PersonMobilePhone" value={refereeDetails.PersonMobilePhone} onchange={handleInputChange} required ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input type="email" label="Referral Email ID" name="PersonEmail" value={refereeDetails.PersonEmail} onchange={handleInputChange} required ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input type="text" label="Referral Code" name="Referee_Code_DC__c" value={refereeDetails.Referee_Code_DC__c} onchange={handleInputChange} required ></lightning-input>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-p-horizontal_small slds-m-top_medium slds-m-bottom_x-large" if:true={isReadOnly}>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input readonly type="text" label="Referral Name" name="Name" value={refereeDetails.Name} onchange={handleInputChange} required ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input readonly type="phone" label="Referral Number" name="PersonMobilePhone" value={refereeDetails.PersonMobilePhone} onchange={handleInputChange} required ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input readonly type="email" label="Referral Email ID" name="PersonEmail" value={refereeDetails.PersonEmail} onchange={handleInputChange} required ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-around_medium lgc-bg">
+                <lightning-input readonly type="text" label="Referral Code" name="Referee_Code_DC__c" value={refereeDetails.Referee_Code_DC__c} onchange={handleInputChange} required ></lightning-input>
+            </div>
+        </div>
+        <p slot="footer">
+            <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+        </p>
+    </lightning-card>
+    
+</template>

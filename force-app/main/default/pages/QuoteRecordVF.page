@@ -1,0 +1,34 @@
+<apex:page standardStylesheets="true" showHeader="false" standardController="Quote">
+    <style>
+        /* Set the height of the HTML and body to 100% */
+        html, body {
+            height: 300vh !important;
+            margin: 0;
+            padding: 0;
+         
+        }
+        /* Set the height of the container div to 100% */
+        #LwcId {
+            height: 200vh !important;
+            /*border: 2px solid black;*/
+        }
+    </style>
+    <apex:includeLightning />    
+    <div id="LwcId">
+        <!-- This is where the LWC component will be rendered -->
+    </div>
+    <script>
+        $Lightning.use("c:QuoteRecordForm", function() {
+            $Lightning.createComponent(
+                "c:quotationRanges",
+                {
+                    recordId : '{!$CurrentPage.parameters.id}'
+                },
+                "LwcId", 
+                function(cmp) {
+                    console.log('Calling the LWC Component');
+                }
+            );
+        });
+    </script>
+</apex:page>

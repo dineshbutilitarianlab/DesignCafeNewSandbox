@@ -1,0 +1,28 @@
+<aura:component controller="QuickCaseController"
+    implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+
+    <aura:attribute name="project" type="Milestone1_Project__c" />
+    <aura:attribute name="newCase" type="Case"
+        default="{ 'sobjectType': 'Case' }" /> <!-- default to empty record -->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- Display a header with details about the Project -->
+    <div class="slds-page-header" role="banner">
+        <p class="slds-text-heading_label">{!v.project.Name}</p>
+        <h1 class="slds-page-header__title slds-m-right_small
+            slds-truncate slds-align-left">Create New Case</h1>
+    </div>
+
+    <!-- Display the new case form -->
+     <lightning:input aura:id="caseField" name="subject" label="Subject"
+                      value="{!v.newCase.Subject}" required="true"/>
+  
+    <lightning:textarea aura:id="caseField" name="description" label="Description"
+                     value="{!v.newCase.Description}" required="true"/>
+      
+    <lightning:button label="Cancel" onclick="{!c.handleCancel}" class="slds-m-top_medium" />
+    <lightning:button label="Save" onclick="{!c.handleSaveCase}"
+               variant="brand" class="slds-m-top_medium"/>
+    
+</aura:component>

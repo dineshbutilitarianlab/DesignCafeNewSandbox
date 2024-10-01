@@ -1,0 +1,11 @@
+.dummy{
+	color : blue;
+}
+.container{
+	height:300 vh !important;
+
+}
+.button-container {
+            text-align: center;
+            margin-top: 20px; /* Adjust as needed */
+        }
